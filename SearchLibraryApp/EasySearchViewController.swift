@@ -151,8 +151,6 @@ class EasySearchViewController: UIViewController, UISearchBarDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-//        print(indexPath.row)
-//        print(collectionTableArray[indexPath.row])
         self.item = collectionTableArray[indexPath.row]
         performSegue(withIdentifier: "goSelectBook", sender: nil)
     }
