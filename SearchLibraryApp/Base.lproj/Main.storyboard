@@ -108,11 +108,14 @@
                                 <rect key="frame" x="302" y="5" width="92" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="cart" catalog="system"/>
+                                <buttonConfiguration key="configuration" style="plain" image="cart" catalog="system">
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="goCartView:" destination="KfE-LA-OLw" eventType="touchUpInside" id="VcP-OI-eQH"/>
                                 </connections>
                             </button>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <segue destination="b9V-ob-Go6" kind="show" identifier="goCart" id="EBr-9m-bfC"/>
                             </connections>
@@ -190,6 +193,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vsG-PQ-cdc"/>
+                    <connections>
+                        <outlet property="tableView" destination="9al-Bg-kSz" id="grF-tw-zZV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M0J-Wu-Ap4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -413,6 +419,9 @@
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system">
                                     <color key="baseForegroundColor" systemColor="labelColor"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="addAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xbB-Z3-dfM"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
