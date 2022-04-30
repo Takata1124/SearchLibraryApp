@@ -33,6 +33,10 @@
 		68D1C3AA281AEA4C0046D298 /* ApiKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D1C3A9281AEA4C0046D298 /* ApiKey.swift */; };
 		68D1C3AD281C2F910046D298 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D1C3AB281C2F910046D298 /* TableViewCell.swift */; };
 		68D1C3AE281C2F910046D298 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68D1C3AC281C2F910046D298 /* TableViewCell.xib */; };
+		68D1C3B0281C7B460046D298 /* SearchBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D1C3AF281C7B460046D298 /* SearchBookViewController.swift */; };
+		68D1C3B2281CDCE90046D298 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D1C3B1281CDCE90046D298 /* SettingViewController.swift */; };
+		68D1C3B5281DA4620046D298 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D1C3B3281DA4620046D298 /* BookTableViewCell.swift */; };
+		68D1C3B6281DA4620046D298 /* BookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68D1C3B4281DA4620046D298 /* BookTableViewCell.xib */; };
 		E3A961AF2651BED781813D27 /* Pods_SearchLibraryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0565720ED267F318FB410A1 /* Pods_SearchLibraryApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +89,10 @@
 		68D1C3A9281AEA4C0046D298 /* ApiKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKey.swift; sourceTree = "<group>"; };
 		68D1C3AB281C2F910046D298 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		68D1C3AC281C2F910046D298 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		68D1C3AF281C7B460046D298 /* SearchBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookViewController.swift; sourceTree = "<group>"; };
+		68D1C3B1281CDCE90046D298 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		68D1C3B3281DA4620046D298 /* BookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
+		68D1C3B4281DA4620046D298 /* BookTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookTableViewCell.xib; sourceTree = "<group>"; };
 		8577D4AA9B380B32548B4261 /* Pods-SearchLibraryApp-SearchLibraryAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchLibraryApp-SearchLibraryAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-SearchLibraryApp-SearchLibraryAppUITests/Pods-SearchLibraryApp-SearchLibraryAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B0565720ED267F318FB410A1 /* Pods_SearchLibraryApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SearchLibraryApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7118CF48219F71EEEB839F0 /* Pods-SearchLibraryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchLibraryApp.release.xcconfig"; path = "Target Support Files/Pods-SearchLibraryApp/Pods-SearchLibraryApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +167,8 @@
 				68D1C395281852560046D298 /* LibrarySpotViewController.swift */,
 				68D1C3A0281A66980046D298 /* SelectBookViewController.swift */,
 				68D1C399281970420046D298 /* BarcodeViewController.swift */,
+				68D1C3AF281C7B460046D298 /* SearchBookViewController.swift */,
+				68D1C3B1281CDCE90046D298 /* SettingViewController.swift */,
 				68D1C3602816F6400046D298 /* Main.storyboard */,
 				68D1C3662816F6420046D298 /* Assets.xcassets */,
 				68D1C3682816F6420046D298 /* LaunchScreen.storyboard */,
@@ -167,6 +177,8 @@
 				68D1C3A9281AEA4C0046D298 /* ApiKey.swift */,
 				68D1C3AB281C2F910046D298 /* TableViewCell.swift */,
 				68D1C3AC281C2F910046D298 /* TableViewCell.xib */,
+				68D1C3B3281DA4620046D298 /* BookTableViewCell.swift */,
+				68D1C3B4281DA4620046D298 /* BookTableViewCell.xib */,
 			);
 			path = SearchLibraryApp;
 			sourceTree = "<group>";
@@ -341,6 +353,7 @@
 				68D1C3AE281C2F910046D298 /* TableViewCell.xib in Resources */,
 				68D1C3672816F6420046D298 /* Assets.xcassets in Resources */,
 				68D1C3622816F6400046D298 /* Main.storyboard in Resources */,
+				68D1C3B6281DA4620046D298 /* BookTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,13 +489,16 @@
 				68D1C3982818ED0E0046D298 /* LocationData.swift in Sources */,
 				68D1C35B2816F6400046D298 /* AppDelegate.swift in Sources */,
 				68D1C3A3281AD8FE0046D298 /* CartViewController.swift in Sources */,
+				68D1C3B5281DA4620046D298 /* BookTableViewCell.swift in Sources */,
 				68D1C39F281A336E0046D298 /* BookData.swift in Sources */,
 				68D1C38E2817A4EE0046D298 /* HomeModel.swift in Sources */,
 				68D1C3AA281AEA4C0046D298 /* ApiKey.swift in Sources */,
+				68D1C3B0281C7B460046D298 /* SearchBookViewController.swift in Sources */,
 				68D1C35D2816F6400046D298 /* SceneDelegate.swift in Sources */,
 				68D1C39D2819A3380046D298 /* EasySearchViewController.swift in Sources */,
 				68D1C3922817E86C0046D298 /* HomeViewController.swift in Sources */,
 				68D1C3AD281C2F910046D298 /* TableViewCell.swift in Sources */,
+				68D1C3B2281CDCE90046D298 /* SettingViewController.swift in Sources */,
 				68D1C39A281970420046D298 /* BarcodeViewController.swift in Sources */,
 				68D1C3902817AFA70046D298 /* IsbnData.swift in Sources */,
 			);

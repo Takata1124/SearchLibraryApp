@@ -11,7 +11,10 @@ class TableViewCell: UITableViewCell {
     
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var label: UILabel!
- 
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var isbnLabel: UILabel!
+    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
