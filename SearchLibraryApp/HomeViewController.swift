@@ -55,6 +55,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
+        appDelegate.selfLocation = locValue
+        
         searchLocationLibrary(latitude: locValue.latitude, longitude: locValue.longitude) { totalArray in
             
             self.appDelegate.totalArray = totalArray
@@ -63,7 +65,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
     func searchLocationLibrary(latitude: Double, longitude: Double, completion: @escaping ([Spot]) -> Void) {
         
-        let count: Int = 7
+        let count: Int = 6
         let libraryApikey: String = Apikey().libraryApikey
         let url: String = "https://api.calil.jp/library?appkey=\(libraryApikey)&callback=&geocode=\(longitude),\(latitude)&limit=\(String(count))&format=json"
         var totalArray: [Spot] = []
@@ -81,8 +83,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
                     let systemid = singleData.systemid
                     let longitude = singleData.geocode.components(separatedBy: ",")[0]
                     let latitude = singleData.geocode.components(separatedBy: ",")[1]
+                    let url_pc = singleData.url_pc
                     
-                    let spot = Spot(name: name, systemId: systemid, latitude: latitude, longitude: longitude, distance: distance)
+                    let spot = Spot(name: name, systemId: systemid, latitude: latitude, longitude: longitude, distance: distance, url_pc: url_pc)
                     
                     totalArray.append(spot)
                     
@@ -105,17 +108,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func goSettingVIew(_ sender: Any) {
         performSegue(withIdentifier: "goSetting", sender: nil)
     }
-    
-    
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

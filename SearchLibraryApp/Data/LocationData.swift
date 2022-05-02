@@ -18,6 +18,7 @@ struct LocationData: Decodable {
     let geocode: String
     let distance: Double
     let systemid: String
+    let url_pc: String
 }
 
 struct Spot {
@@ -27,6 +28,7 @@ struct Spot {
     let latitude: String
     let longitude: String
     let distance: Double
+    let url_pc: String
 //    var coordinate: CLLocationCoordinate2D {
 //        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
 //    }

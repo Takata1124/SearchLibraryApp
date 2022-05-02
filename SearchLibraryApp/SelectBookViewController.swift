@@ -16,16 +16,19 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var uiImage: UIImage?
     var item: Item?
+    var articleUrl: String = ""
+    
+    var latitude: String = ""
+    var longitude: String = ""
     
     var resultArray: [String] = [] {
         didSet {
             if resultArray.count == appDelegate.totalArray.count && resultArray.contains("検索中") {
                 resultArray = []
-                tableView.reloadData()
+                libraryTableView.reloadData()
             }
             
             if resultArray.count == appDelegate.totalArray.count && !resultArray.contains("検索中") {
-                print("完了しました")
                 HUD.hide()
             }
         }
@@ -36,24 +39,38 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var isbnLabel: UILabel!
     @IBOutlet weak var pubdateLabel: UILabel!
     @IBOutlet weak var coverImage: UIImageView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var libraryTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorInset = .zero
-//        tableView.separatorColor = .black
-        tableView.layer.borderColor = UIColor.black.cgColor
-        tableView.layer.borderWidth = 0.5
+        libraryTableView.delegate = self
+        libraryTableView.dataSource = self
+        libraryTableView.separatorInset = .zero
+        libraryTableView.layer.borderColor = UIColor.black.cgColor
+        libraryTableView.layer.borderWidth = 0.5
         
-        tableView.register(UINib(nibName: "BookTableViewCell", bundle: nil), forCellReuseIdentifier: "bookCell")
+        libraryTableView.register(UINib(nibName: "BookTableViewCell", bundle: nil), forCellReuseIdentifier: "bookCell")
+        
+        NotificationCenter.default.addObserver(forName: .notifyWeb, object: nil, queue: nil) { notification in
+            
+            guard let url = notification.userInfo?["url"] else { return }
+            self.articleUrl = url as! String
+            self.performSegue(withIdentifier: "goWeb", sender: nil)
+        }
+        
+        NotificationCenter.default.addObserver(forName: .notifyMap, object: nil, queue: nil) { notification in
+            
+            guard let latitude = notification.userInfo?["latitude"] else { return }
+            guard let longitude = notification.userInfo?["longitude"] else { return }
+
+            self.latitude = latitude as! String
+            self.longitude = longitude as! String
+            
+            self.performSegue(withIdentifier: "goLocation", sender: nil)
+        }
         
         HUD.show(.progress, onView: self.view)
-        
-        print(appDelegate.totalArray)
-        print(appDelegate.totalArray.count)
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,7 +92,7 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
         let api_key = Apikey().libraryApikey
         
         let url = "https://api.calil.jp/check?appkey=\(api_key)&isbn=\(isbn)&systemid=\(systemId)&callback=no&format=json"
-
+        
         AF.request(url).responseJSON { response in
             
             guard let data = response.data else {
@@ -86,13 +103,10 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
             do {
                 let json = try JSON(data: data)
                 
-//                print(json)
-
                 guard let conTinue = json["continue"].int else {
                     completion("蔵書なし")
                     return
                 }
-                print(conTinue)
                 
                 if conTinue == 0 {
                     
@@ -101,13 +115,7 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
                         return
                     }
                     
-                    print(situation)
-                    print(situation.description.components(separatedBy: ","))
-                    print(situation.count)
-                    
                     if let key = situation.keys.first {
-                        
-                        
                         
                         guard let borrow = situation[key] else {
                             completion("蔵書なし")
@@ -116,14 +124,13 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
                         
                         let result = borrow.rawValue as! String
                         completion(result)
-                        
-                    } else {
+                    }
+                    else {
                         completion("蔵書なし")
                     }
                 } else {
                     completion("検索中")
                 }
-                
             } catch {
                 completion("検出不可")
             }
@@ -137,22 +144,23 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        print(indexPath.row)
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "bookCell", for: indexPath) as! BookTableViewCell
         
         let name = appDelegate.totalArray[indexPath.row].name
         let systemId = appDelegate.totalArray[indexPath.row].systemId
-//        print(systemId)
-    
+        let url = appDelegate.totalArray[indexPath.row].url_pc
+        let latitude = appDelegate.totalArray[indexPath.row].latitude
+        let longitude = appDelegate.totalArray[indexPath.row].longitude
+        
         searchBooks(isbn: self.isbnLabel.text ?? "", systemId: systemId) { text in
-            print(text)
             self.resultArray.append(text)
-//            cell.borrowLabel.text = text
             cell.borrowSituation = text
         }
         
         cell.libraryName.text = name
+        cell.articleUrl = url
+        cell.latitude = latitude
+        cell.longitude = longitude
         
         return cell
     }
@@ -162,9 +170,32 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
         return 75
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        libraryTableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "goWeb" {
+            let webViewController = segue.destination as! WebViewController
+            webViewController.articleUrl = self.articleUrl
+        }
+        
+        if segue.identifier == "goLocation" {
+            let mapViewController = segue.destination as! MapViewController
+            mapViewController.latitude = self.latitude
+            mapViewController.longitude = self.longitude
+        }
+    }
+    
     @IBAction func goBackView(_ sender: Any) {
         
         self.navigationController?.popViewController(animated: true)
     }
     
+//    @objc func doOpenMapView(_ notification: Notification) {
+//
+//        performSegue(withIdentifier: "goLocation", sender: nil)
+//    }
 }
