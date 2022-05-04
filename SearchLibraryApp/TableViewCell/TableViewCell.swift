@@ -13,7 +13,20 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var isbnLabel: UILabel!
+    @IBOutlet weak var createdLabel: UILabel!
+    @IBOutlet weak var doneReadLabel: UILabel!
     
+    var isRead: Bool = false{
+        didSet {
+            if isRead {
+                self.doneReadLabel.text = "読書済み"
+                self.doneReadLabel.tintColor = .red
+            } else {
+                self.doneReadLabel.text = "読書中"
+                self.doneReadLabel.tintColor = .black
+            }
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

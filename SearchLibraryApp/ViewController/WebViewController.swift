@@ -10,6 +10,7 @@ import WebKit
 
 class WebViewController: UIViewController {
     
+    var webTitle: String = ""
     var articleUrl: String = ""
     
     let webView = WKWebView()
@@ -29,7 +30,8 @@ class WebViewController: UIViewController {
     
     private func setupLayout() {
         
-        print(articleUrl)
+        self.title = String(webTitle)
+        
         baseView.addSubview(webView)
         
         let request = URLRequest(url: URL(string: "\(articleUrl)")!)

@@ -17,7 +17,7 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
     var uiImage: UIImage?
     var item: Item?
     var articleUrl: String = ""
-    
+    var webTitle: String = ""
     var latitude: String = ""
     var longitude: String = ""
     
@@ -47,15 +47,17 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
         libraryTableView.delegate = self
         libraryTableView.dataSource = self
         libraryTableView.separatorInset = .zero
-        libraryTableView.layer.borderColor = UIColor.black.cgColor
-        libraryTableView.layer.borderWidth = 0.5
+        libraryTableView.separatorColor = UIColor.black
         
         libraryTableView.register(UINib(nibName: "BookTableViewCell", bundle: nil), forCellReuseIdentifier: "bookCell")
         
         NotificationCenter.default.addObserver(forName: .notifyWeb, object: nil, queue: nil) { notification in
             
             guard let url = notification.userInfo?["url"] else { return }
+            guard let webTitle = notification.userInfo?["webTitle"] else { return }
             self.articleUrl = url as! String
+            self.webTitle = webTitle as! String
+            
             self.performSegue(withIdentifier: "goWeb", sender: nil)
         }
         
@@ -151,17 +153,18 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
         let url = appDelegate.totalArray[indexPath.row].url_pc
         let latitude = appDelegate.totalArray[indexPath.row].latitude
         let longitude = appDelegate.totalArray[indexPath.row].longitude
+        let webTitle = appDelegate.totalArray[indexPath.row].name
         
         searchBooks(isbn: self.isbnLabel.text ?? "", systemId: systemId) { text in
             self.resultArray.append(text)
             cell.borrowSituation = text
+            cell.libraryName.text = name
+            cell.articleUrl = url
+            cell.latitude = latitude
+            cell.longitude = longitude
+            cell.webTitle = webTitle
         }
-        
-        cell.libraryName.text = name
-        cell.articleUrl = url
-        cell.latitude = latitude
-        cell.longitude = longitude
-        
+    
         return cell
     }
     
@@ -180,6 +183,7 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
         if segue.identifier == "goWeb" {
             let webViewController = segue.destination as! WebViewController
             webViewController.articleUrl = self.articleUrl
+            webViewController.webTitle = self.webTitle
         }
         
         if segue.identifier == "goLocation" {
@@ -193,9 +197,4 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.navigationController?.popViewController(animated: true)
     }
-    
-//    @objc func doOpenMapView(_ notification: Notification) {
-//
-//        performSegue(withIdentifier: "goLocation", sender: nil)
-//    }
 }

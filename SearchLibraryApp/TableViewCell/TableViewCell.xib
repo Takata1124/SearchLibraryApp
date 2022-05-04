@@ -24,43 +24,59 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="wdb-N6-cLA">
-                        <rect key="frame" x="115" y="22" width="250" height="75"/>
+                        <rect key="frame" x="115" y="22" width="150" height="75"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PH4-Nv-uLY">
-                                <rect key="frame" x="0.0" y="0.0" width="250" height="25"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J7a-oe-E5k">
-                                <rect key="frame" x="0.0" y="25" width="250" height="25"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <rect key="frame" x="0.0" y="19" width="150" height="18.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYl-G1-B56">
-                                <rect key="frame" x="0.0" y="50" width="250" height="25"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <rect key="frame" x="0.0" y="37.5" width="150" height="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anb-u2-ZWx">
+                                <rect key="frame" x="0.0" y="56.5" width="150" height="18.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" constant="75" id="0G3-Oc-5Fm"/>
-                            <constraint firstAttribute="width" constant="250" id="Jgk-xJ-6Jp"/>
+                            <constraint firstAttribute="width" constant="150" id="Jgk-xJ-6Jp"/>
                         </constraints>
                     </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="読書中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNz-56-NAU">
+                        <rect key="frame" x="290" y="53" width="34" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="rK9-Py-V1a" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="0Rc-p7-Buy"/>
+                    <constraint firstItem="kNz-56-NAU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="8sl-3h-kSr"/>
                     <constraint firstItem="wdb-N6-cLA" firstAttribute="leading" secondItem="rK9-Py-V1a" secondAttribute="trailing" constant="25" id="PbM-ff-ZM4"/>
                     <constraint firstItem="rK9-Py-V1a" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="UAv-R3-O7m"/>
                     <constraint firstItem="wdb-N6-cLA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="arQ-yf-CND"/>
+                    <constraint firstItem="kNz-56-NAU" firstAttribute="leading" secondItem="wdb-N6-cLA" secondAttribute="trailing" constant="25" id="hmY-0K-Dcu"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="authorLabel" destination="J7a-oe-E5k" id="cU9-KL-ieH"/>
+                <outlet property="createdLabel" destination="anb-u2-ZWx" id="T9S-xP-xXd"/>
+                <outlet property="doneReadLabel" destination="kNz-56-NAU" id="dzg-d2-SBz"/>
                 <outlet property="img" destination="rK9-Py-V1a" id="HuW-qw-5xC"/>
                 <outlet property="isbnLabel" destination="ZYl-G1-B56" id="qFG-74-ySa"/>
                 <outlet property="label" destination="PH4-Nv-uLY" id="BSX-3f-Rcf"/>

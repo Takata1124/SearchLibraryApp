@@ -29,12 +29,13 @@ class BookTableViewCell: UITableViewCell {
     var articleUrl: String = ""
     var longitude: String = ""
     var latitude: String = ""
+    var webTitle: String = ""
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.layer.borderWidth = 0.5
-        self.layer.borderColor = UIColor.black.cgColor
+//        self.layer.borderWidth = 0.5
+//        self.layer.borderColor = UIColor.black.cgColor
         
         webButton.addTarget(self, action: #selector(self.doOpenWeb(_:)), for: UIControl.Event.touchUpInside)
         mapButton.addTarget(self, action: #selector(self.doOpenMap(_:)), for: UIControl.Event.touchUpInside)
@@ -47,12 +48,10 @@ class BookTableViewCell: UITableViewCell {
     
     @objc func doOpenWeb(_ sender: UIButton) {
         
-        NotificationCenter.default.post(name: .notifyWeb, object: nil, userInfo: ["url": self.articleUrl])
+        NotificationCenter.default.post(name: .notifyWeb, object: nil, userInfo: ["url": self.articleUrl, "webTitle": self.webTitle])
     }
     
     @objc func doOpenMap(_ sender: UIButton) {
-        
-//        NotificationCenter.default.post(name: .notifyMap, object: nil)
 
         NotificationCenter.default.post(name: .notifyMap, object: nil, userInfo: ["latitude": self.latitude, "longitude": self.longitude])
     }

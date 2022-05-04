@@ -102,6 +102,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
         let directions = MKDirections(request: request)
         directions.calculate { response, error in
+            
             guard let route = response?.routes.first else { return }
             self.route = route
             self.mapView.addOverlay(route.polyline)
