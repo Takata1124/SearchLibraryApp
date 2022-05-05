@@ -226,10 +226,10 @@
 		68D1C3BE28204CAD0046D298 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				68D1C3912817E86C0046D298 /* HomeViewController.swift */,
 				68D1C35E2816F6400046D298 /* IsbnViewController.swift */,
 				68D1C39C2819A3380046D298 /* EasySearchViewController.swift */,
 				68D1C3A2281AD8FE0046D298 /* CartViewController.swift */,
-				68D1C3912817E86C0046D298 /* HomeViewController.swift */,
 				68D1C393281805660046D298 /* SearchViewController.swift */,
 				68D1C395281852560046D298 /* LibrarySpotViewController.swift */,
 				68D1C3A0281A66980046D298 /* SelectBookViewController.swift */,

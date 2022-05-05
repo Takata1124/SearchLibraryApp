@@ -56,20 +56,35 @@
                             <constraint firstAttribute="width" constant="150" id="Jgk-xJ-6Jp"/>
                         </constraints>
                     </stackView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="読書中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNz-56-NAU">
-                        <rect key="frame" x="290" y="53" width="34" height="13.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jz7-ey-sEq">
+                        <rect key="frame" x="280" y="34.5" width="100" height="50"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="読書中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNz-56-NAU">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gFF-2u-sQn">
+                                <rect key="frame" x="0.0" y="29.5" width="100" height="20"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="PVP-Ih-cxJ"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="Mgg-d9-fCH"/>
+                        </constraints>
+                    </stackView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="rK9-Py-V1a" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="0Rc-p7-Buy"/>
-                    <constraint firstItem="kNz-56-NAU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="8sl-3h-kSr"/>
+                    <constraint firstItem="jz7-ey-sEq" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="28w-Tg-g9z"/>
                     <constraint firstItem="wdb-N6-cLA" firstAttribute="leading" secondItem="rK9-Py-V1a" secondAttribute="trailing" constant="25" id="PbM-ff-ZM4"/>
                     <constraint firstItem="rK9-Py-V1a" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="UAv-R3-O7m"/>
+                    <constraint firstItem="jz7-ey-sEq" firstAttribute="leading" secondItem="wdb-N6-cLA" secondAttribute="trailing" constant="15" id="Y61-qc-Fvh"/>
                     <constraint firstItem="wdb-N6-cLA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="arQ-yf-CND"/>
-                    <constraint firstItem="kNz-56-NAU" firstAttribute="leading" secondItem="wdb-N6-cLA" secondAttribute="trailing" constant="25" id="hmY-0K-Dcu"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -80,8 +95,12 @@
                 <outlet property="img" destination="rK9-Py-V1a" id="HuW-qw-5xC"/>
                 <outlet property="isbnLabel" destination="ZYl-G1-B56" id="qFG-74-ySa"/>
                 <outlet property="label" destination="PH4-Nv-uLY" id="BSX-3f-Rcf"/>
+                <outlet property="starImage" destination="gFF-2u-sQn" id="c2i-Df-Chn"/>
             </connections>
             <point key="canvasLocation" x="208.69565217391306" y="157.03125"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
+    </resources>
 </document>

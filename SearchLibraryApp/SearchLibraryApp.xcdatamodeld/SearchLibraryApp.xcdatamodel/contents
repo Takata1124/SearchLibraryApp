@@ -8,11 +8,12 @@
         <attribute name="isbn" optional="YES" attributeType="String"/>
         <attribute name="pubDate" optional="YES" attributeType="String"/>
         <attribute name="read" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="star" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
     <elements>
-        <element name="CartItem" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="CartItem" positionX="-63" positionY="-18" width="128" height="164"/>
         <element name="Entity" positionX="-54" positionY="9" width="128" height="29"/>
     </elements>
 </model>
