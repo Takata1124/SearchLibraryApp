@@ -55,8 +55,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-    private var cartItemModel: [CartItem] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,13 +68,15 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         coreDataTableView.separatorColor = .black
         
         coreDataTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
+        
+        self.presenter = CartPresenter(output: self, model: CartModel())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        fetchAllItem()
+//        fetchAllItem()
         
-        coreDataTableView.reloadData()
+//        coreDataTableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -94,72 +94,15 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func fetchAllItem() {
-        do {
-            cartItemModel = try context.fetch(CartItem.fetchRequest())
-        } catch {
-            print("error")
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return cartItemModel.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
-        
-        getUrlImage(imageUrl: cartItemModel[indexPath.row].imageUrl ?? "") { uiImage in
-            
-            cell.img.image = uiImage
-            cell.label.text = self.cartItemModel[indexPath.row].title
-            cell.authorLabel.text = self.cartItemModel[indexPath.row].author
-            cell.isbnLabel.text = self.cartItemModel[indexPath.row].isbn
-            cell.createdLabel.text = self.cartItemModel[indexPath.row].createdAt?.toStringWithCurrentLocale()
-            cell.isRead = self.cartItemModel[indexPath.row].read
-            cell.isStar = self.cartItemModel[indexPath.row].star
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        coreDataTableView.deselectRow(at: indexPath, animated: true)
-        
-        let commit = cartItemModel[indexPath.row]
-        
-        self.item = Item(title: commit.title ?? "", author: commit.author ?? "", isbn: commit.isbn ?? "", salesDate: commit.pubDate ?? "", itemCaption: commit.detailText ?? "", largeImageUrl: commit.imageUrl ?? "")
-        self.star = commit.star
-        self.read = commit.read
-  
-        performSegue(withIdentifier: "goDetail", sender: nil)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return 100
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            
-            let commit = cartItemModel[indexPath.row]
-            context.delete(commit)
-            
-            do {
-                try context.save()
-            } catch {
-                print("CoreDataに保存できませんでした")
-            }
-            
-            cartItemModel.remove(at: indexPath.row)
-            
-            coreDataTableView.reloadData()
-        }
-    }
+//    private func fetchAllItem() {
+//        do {
+//            cartItemModel = try context.fetch(CartItem.fetchRequest())
+//        } catch {
+//            print("error")
+//        }
+//    }
+
+    private var presenter : CartPresenterInput!
     
     private func getUrlImage(imageUrl: String, completion: @escaping(UIImage) -> Void) {
         
@@ -172,52 +115,54 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func confirmReadButton(_ sender: Any) {
         
-        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
         
-        if isRead == false {
-            fetchRequest.predicate = NSPredicate(format: "read = %d", true)
-        } else {
-            fetchRequest.predicate = NSPredicate(format: "read = %d", false)
-        }
         
-        do {
-            cartItemModel = try context.fetch(fetchRequest)
-        } catch {
-            print(error)
-        }
-        
-        isRead.toggle()
- 
-        coreDataTableView.reloadData()
+//        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
+//
+//        if isRead == false {
+//            fetchRequest.predicate = NSPredicate(format: "read = %d", true)
+//        } else {
+//            fetchRequest.predicate = NSPredicate(format: "read = %d", false)
+//        }
+//
+//        do {
+//            cartItemModel = try context.fetch(fetchRequest)
+//        } catch {
+//            print(error)
+//        }
+//
+//        isRead.toggle()
+//
+//        coreDataTableView.reloadData()
     }
     
     @IBAction func orderButton(_ sender: Any) {
         
-        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
-        
-        let sort: NSSortDescriptor?
-        
-        if isNewOrder == false {
-            sort = NSSortDescriptor(key: "pubDate", ascending: true)
-        } else {
-            sort = NSSortDescriptor(key: "pubDate", ascending: false)
-        }
-        
-        guard let sort = sort else {
-            return
-        }
-
-        fetchRequest.sortDescriptors = [sort]
-        
-        do {
-            cartItemModel = try context.fetch(fetchRequest)
-        } catch {
-            print(error)
-        }
-        
-        isNewOrder.toggle()
- 
-        coreDataTableView.reloadData()
+//        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
+//
+//        let sort: NSSortDescriptor?
+//
+//        if isNewOrder == false {
+//            sort = NSSortDescriptor(key: "pubDate", ascending: true)
+//        } else {
+//            sort = NSSortDescriptor(key: "pubDate", ascending: false)
+//        }
+//
+//        guard let sort = sort else {
+//            return
+//        }
+//
+//        fetchRequest.sortDescriptors = [sort]
+//
+//        do {
+//            cartItemModel = try context.fetch(fetchRequest)
+//        } catch {
+//            print(error)
+//        }
+//
+//        isNewOrder.toggle()
+//
+//        coreDataTableView.reloadData()
     }
     
     @IBAction func opneKeyboard(_ sender: Any) {
@@ -226,52 +171,118 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func allItemButton(_ sender: Any) {
-   
-        fetchAllItem()
         
-        coreDataTableView.reloadData()
+//        fetchAllItem()
+//
+//        coreDataTableView.reloadData()
     }
-
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
- 
-        self.searchBar.endEditing(true)
         
-        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
-     
-        if searchBar.text != "" {
-
-            cartItemModel.removeAll()
-
-            fetchRequest.predicate = NSPredicate(format:"title CONTAINS %@ || author CONTAINS %@", "\(searchBar.text!)", "\(searchBar.text!)")
-     
-            do {
-                cartItemModel = try context.fetch(fetchRequest)
-            } catch {
-                print(error)
-            }
-
-            coreDataTableView.reloadData()
-        }
+//        self.searchBar.endEditing(true)
+//
+//        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
+//
+//        if searchBar.text != "" {
+//
+//            cartItemModel.removeAll()
+//
+//            fetchRequest.predicate = NSPredicate(format:"title CONTAINS %@ || author CONTAINS %@", "\(searchBar.text!)", "\(searchBar.text!)")
+//
+//            do {
+//                cartItemModel = try context.fetch(fetchRequest)
+//            } catch {
+//                print(error)
+//            }
+//
+//            coreDataTableView.reloadData()
+//        }
     }
     
     @IBAction func filterStar(_ sender: Any) {
         
-        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
-        
-        if isStarFilter == false {
-            fetchRequest.predicate = NSPredicate(format: "star = %d", true)
-        } else {
-            fetchRequest.predicate = NSPredicate(format: "star = %d", false)
-        }
-        
-        isStarFilter.toggle()
-     
-        do {
-            cartItemModel = try context.fetch(fetchRequest)
-        } catch {
-            print(error)
-        }
- 
-        coreDataTableView.reloadData()
+        presenter.didTapFilterStar(isStarFiter: isStarFilter)
+//        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
+//
+//        if isStarFilter == false {
+//            fetchRequest.predicate = NSPredicate(format: "star = %d", true)
+//        } else {
+//            fetchRequest.predicate = NSPredicate(format: "star = %d", false)
+//        }
+//
+//        isStarFilter.toggle()
+//
+//        do {
+//            cartItemModel = try context.fetch(fetchRequest)
+//        } catch {
+//            print(error)
+//        }
+//
+//        coreDataTableView.reloadData()
     }
+}
+
+extension CartViewController {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return self.presenter.numberOfItems
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
+        
+        getUrlImage(imageUrl:  self.presenter.item(index: indexPath.row).imageUrl ?? "") { uiImage in
+            
+            cell.img.image = uiImage
+            cell.label.text = self.presenter.item(index: indexPath.row).title
+            cell.authorLabel.text = self.presenter.item(index: indexPath.row).author
+            cell.isbnLabel.text = self.presenter.item(index: indexPath.row).isbn
+            cell.createdLabel.text = self.presenter.item(index: indexPath.row).createdAt?.toStringWithCurrentLocale()
+            cell.isRead = self.presenter.item(index: indexPath.row).read
+            cell.isStar = self.presenter.item(index: indexPath.row).star
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        coreDataTableView.deselectRow(at: indexPath, animated: true)
+        
+        let commit = self.presenter.item(index: indexPath.row)
+        
+        self.item = Item(title: commit.title ?? "", author: commit.author ?? "", isbn: commit.isbn ?? "", salesDate: commit.pubDate ?? "", itemCaption: commit.detailText ?? "", largeImageUrl: commit.imageUrl ?? "")
+        self.star = commit.star
+        self.read = commit.read
+        
+        performSegue(withIdentifier: "goDetail", sender: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 100
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            self.presenter.didTapSelectRemoveItem(index: indexPath.row)
+        }
+    }
+}
+
+extension CartViewController: CartPresenterOutput {
+    
+    func updateTable() {
+        
+        self.coreDataTableView.reloadData()
+    }
+    
+    func updateIsStarFilterSituation(isStarFilter: Bool) {
+        
+        self.isStarFilter = isStarFilter
+    }
+    
 }

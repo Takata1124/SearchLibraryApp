@@ -107,7 +107,7 @@
         <!--Cart View Controller-->
         <scene sceneID="bAU-m8-4tf">
             <objects>
-                <viewController id="b9V-ob-Go6" customClass="CartViewController" customModule="SearchLibraryApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CartView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b9V-ob-Go6" customClass="CartViewController" customModule="SearchLibraryApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0w8-MU-f1O">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

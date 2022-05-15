@@ -11,7 +11,7 @@ import Alamofire
 import Charts
 import CoreData
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate {
+class HomeViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -56,14 +56,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         self.homeModel = HomeModel()
         
         self.navigationItem.title = "ホーム"
- 
+        
         setupLocationManager()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         self.homeModel?.fetchAllItem()
-        
         self.homeModel?.distributeItem { countArray, chartLabels in
             self.getChart(labels: chartLabels, rawData: countArray)
         }
@@ -77,9 +76,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
             
             if let createdDays = notification.userInfo?["createdDays"] as? [Date] {
                 self.createdDays = createdDays
-                print(createdDays)
-            } else {
-                print("goBack")
             }
         }
     }
@@ -125,14 +121,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         dataSet.drawValuesEnabled = false
         //dataSet.colors = [.gray]
         dataSet.colors = [UIColor.systemGreen, .systemPink, UIColor.systemGreen, UIColor.systemGreen, UIColor.systemGreen, UIColor.systemGreen, UIColor.systemGreen ]
-        
         //その他設定
         barChart.dragDecelerationEnabled = true //指を離してもスクロール続くか
         barChart.dragDecelerationFrictionCoef = 0.6 //ドラッグ時の減速スピード(0-1)
         barChart.chartDescription.text = nil //Description(今回はなし)
         barChart.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) //Background Color
         barChart.doubleTapToZoomEnabled = false  //ダブルタップでの拡大禁止
-//        barChart.animate(xAxisDuration: 2.5, yAxisDuration: 2.5, easingOption: .linear) //グラフのアニメーション(秒数で設定)
+        //        barChart.animate(xAxisDuration: 2.5, yAxisDuration: 2.5, easingOption: .linear) //グラフのアニメーション(秒数で設定)
     }
     
     private func setupLocationManager() {
@@ -141,6 +136,28 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
     }
+    
+    @IBAction func goSearchView(_ sender: Any) {
+        performSegue(withIdentifier: "goSearch", sender: nil)
+    }
+    
+    @IBAction func goLibraryView(_ sender: Any) {
+        performSegue(withIdentifier: "goLibrary", sender: nil)
+    }
+    
+    @IBAction func goSettingVIew(_ sender: Any) {
+        performSegue(withIdentifier: "goSetting", sender: nil)
+    }
+    
+    @IBAction func goCartView(_ sender: Any) {
+        
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "goCart", sender: nil)
+        }
+    }
+}
+
+extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
@@ -168,23 +185,5 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
         self.homeModel?.searchLocationLibrary(latitude: locValue.latitude, longitude: locValue.longitude)
-    }
-    
-    
-    @IBAction func goSearchView(_ sender: Any) {
-        performSegue(withIdentifier: "goSearch", sender: nil)
-    }
-    
-    @IBAction func goLibraryView(_ sender: Any) {
-        performSegue(withIdentifier: "goLibrary", sender: nil)
-    }
-    
-    @IBAction func goSettingVIew(_ sender: Any) {
-        performSegue(withIdentifier: "goSetting", sender: nil)
-    }
-    
-    @IBAction func goCartView(_ sender: Any) {
-        
-        performSegue(withIdentifier: "goCart", sender: nil)
     }
 }

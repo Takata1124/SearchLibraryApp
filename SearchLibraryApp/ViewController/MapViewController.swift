@@ -69,15 +69,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(locValue.latitude, locValue.longitude)
         
-//        mapView.setCenter(location,animated:true)
-        
-//        var region: MKCoordinateRegion = mapView.region
-//        region.center = location
-//        region.span.latitudeDelta = 0.05
-//        region.span.longitudeDelta = 0.05
-//
-//        mapView.setRegion(region,animated:true)
-        
         let pin = MKPointAnnotation()
         pin.coordinate = CLLocationCoordinate2DMake(locValue.latitude, locValue.longitude)
         pin.title = "現在地"
