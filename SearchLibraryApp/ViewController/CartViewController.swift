@@ -54,7 +54,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
+    
+    private var presenter : CartPresenterInput!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,14 +71,21 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         coreDataTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
         
+        let tapGR: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGR.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapGR)
+        
         self.presenter = CartPresenter(output: self, model: CartModel())
+    }
+    
+    @objc func dismissKeyboard() {
+        
+        self.view.endEditing(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-//        fetchAllItem()
-        
-//        coreDataTableView.reloadData()
+        self.coreDataTableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -94,16 +103,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.popViewController(animated: true)
     }
     
-//    private func fetchAllItem() {
-//        do {
-//            cartItemModel = try context.fetch(CartItem.fetchRequest())
-//        } catch {
-//            print("error")
-//        }
-//    }
-
-    private var presenter : CartPresenterInput!
-    
     private func getUrlImage(imageUrl: String, completion: @escaping(UIImage) -> Void) {
         
         AF.request(imageUrl).responseImage { responseImage in
@@ -115,54 +114,12 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func confirmReadButton(_ sender: Any) {
         
-        
-        
-//        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
-//
-//        if isRead == false {
-//            fetchRequest.predicate = NSPredicate(format: "read = %d", true)
-//        } else {
-//            fetchRequest.predicate = NSPredicate(format: "read = %d", false)
-//        }
-//
-//        do {
-//            cartItemModel = try context.fetch(fetchRequest)
-//        } catch {
-//            print(error)
-//        }
-//
-//        isRead.toggle()
-//
-//        coreDataTableView.reloadData()
+        presenter.didTapFilterRead(isRead: isRead)
     }
     
     @IBAction func orderButton(_ sender: Any) {
         
-//        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
-//
-//        let sort: NSSortDescriptor?
-//
-//        if isNewOrder == false {
-//            sort = NSSortDescriptor(key: "pubDate", ascending: true)
-//        } else {
-//            sort = NSSortDescriptor(key: "pubDate", ascending: false)
-//        }
-//
-//        guard let sort = sort else {
-//            return
-//        }
-//
-//        fetchRequest.sortDescriptors = [sort]
-//
-//        do {
-//            cartItemModel = try context.fetch(fetchRequest)
-//        } catch {
-//            print(error)
-//        }
-//
-//        isNewOrder.toggle()
-//
-//        coreDataTableView.reloadData()
+        presenter.didTapChangeOrder(isNewOrder: isNewOrder)
     }
     
     @IBAction func opneKeyboard(_ sender: Any) {
@@ -172,53 +129,22 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func allItemButton(_ sender: Any) {
         
-//        fetchAllItem()
-//
-//        coreDataTableView.reloadData()
+        presenter.didTapReloadTable()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-//        self.searchBar.endEditing(true)
-//
-//        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
-//
-//        if searchBar.text != "" {
-//
-//            cartItemModel.removeAll()
-//
-//            fetchRequest.predicate = NSPredicate(format:"title CONTAINS %@ || author CONTAINS %@", "\(searchBar.text!)", "\(searchBar.text!)")
-//
-//            do {
-//                cartItemModel = try context.fetch(fetchRequest)
-//            } catch {
-//                print(error)
-//            }
-//
-//            coreDataTableView.reloadData()
-//        }
+        self.searchBar.endEditing(true)
+        
+        if searchBar.text != "" {
+            
+            presenter.didTapSearchButton(searchText: searchBar.text!)
+        }
     }
     
     @IBAction func filterStar(_ sender: Any) {
         
         presenter.didTapFilterStar(isStarFiter: isStarFilter)
-//        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
-//
-//        if isStarFilter == false {
-//            fetchRequest.predicate = NSPredicate(format: "star = %d", true)
-//        } else {
-//            fetchRequest.predicate = NSPredicate(format: "star = %d", false)
-//        }
-//
-//        isStarFilter.toggle()
-//
-//        do {
-//            cartItemModel = try context.fetch(fetchRequest)
-//        } catch {
-//            print(error)
-//        }
-//
-//        coreDataTableView.reloadData()
     }
 }
 
@@ -276,13 +202,18 @@ extension CartViewController {
 extension CartViewController: CartPresenterOutput {
     
     func updateTable() {
-        
         self.coreDataTableView.reloadData()
     }
     
     func updateIsStarFilterSituation(isStarFilter: Bool) {
-        
         self.isStarFilter = isStarFilter
     }
     
+    func updateIsReadFilterSituation(isRead: Bool) {
+        self.isRead = isRead
+    }
+    
+    func updateIsOrderSituation(isNewOrder: Bool) {
+        self.isNewOrder = isNewOrder
+    }
 }

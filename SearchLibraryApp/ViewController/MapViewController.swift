@@ -67,7 +67,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
-        let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(locValue.latitude, locValue.longitude)
+//        let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(locValue.latitude, locValue.longitude)
         
         let pin = MKPointAnnotation()
         pin.coordinate = CLLocationCoordinate2DMake(locValue.latitude, locValue.longitude)
@@ -117,6 +117,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     @IBAction func goBackView(_ sender: Any) {
+        
         self.navigationController?.popViewController(animated: true)
     }
 }

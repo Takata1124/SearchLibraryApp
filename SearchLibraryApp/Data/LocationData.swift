@@ -29,7 +29,4 @@ struct Spot {
     let longitude: String
     let distance: Double
     let url_pc: String
-//    var coordinate: CLLocationCoordinate2D {
-//        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-//    }
 }

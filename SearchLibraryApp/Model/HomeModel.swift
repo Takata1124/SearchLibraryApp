@@ -10,56 +10,59 @@ import Foundation
 import Alamofire
 import CoreData
 
-final class HomeModel {
+protocol HomeModelInput {
     
-    let notificationCenter = NotificationCenter()
-    static let notificationName = "HomeModel"
+    func distributeItem(cartItems: [CartItem], completion: @escaping([Int], [String]) -> Void)
+    func searchLocationLibrary(latitude: Double, longitude: Double)
+    func fetchAllItem(completion: @escaping([Date], [CartItem]) -> Void)
+}
+
+class HomeModel: HomeModelInput {
     
     let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    private(set) var cartItems: [CartItem] = [] {
-        didSet {
+
+    func fetchAllItem(completion: @escaping([Date], [CartItem]) -> Void) {
+        do {
+            let cartItems = try context.fetch(CartItem.fetchRequest())
+            
             var createdDays: [Date] = []
             cartItems.forEach { cartitem in
                 createdDays.append(cartitem.createdAt!)
-                notificationCenter.post(name: .init(rawValue: HomeModel.notificationName), object: nil, userInfo: ["createdDays" : createdDays])
+                completion(createdDays, cartItems)
             }
-        }
-    }
-  
-    func fetchAllItem() {
-        do {
-            cartItems = try context.fetch(CartItem.fetchRequest())
         } catch {
-            print("coreDataをダウンロードできませんでした")
+            completion([], [])
         }
     }
     
-    func distributeItem(completion: @escaping([Int], [String]) -> Void) {
+    func distributeItem(cartItems: [CartItem], completion: @escaping([Int], [String]) -> Void) {
         
         var months: [String] = []
+        
         cartItems.forEach { cartitem in
             let month = cartitem.createdAt?.toStringWithCurrentLocale().prefix(7)
-            guard let month = month else { return }
-            months.append(String(month))
+            if let month = month {
+                months.append(String(month))
+            }
         }
     
         let uniqueMonths = Array(Set(months))
         var countArray: [Int] = []
-        uniqueMonths.enumerated().map { index, month in
-            var c = 0
+        uniqueMonths.enumerated().map { monthIndex, month in
             var i = 0
-            cartItems.forEach { cartItem in
-                c += 1
-                guard let day = cartItem.createdAt?.toStringWithCurrentLocale() else { return }
-                if day.contains(month) {
-                    i += 1
-                }
+            
+            cartItems.enumerated().forEach { index, cartitem in
+                if let day = cartitem.createdAt?.toStringWithCurrentLocale() {
                 
-                if c == cartItems.count {
-                    countArray.insert(i, at: index)
-                    completion(countArray, uniqueMonths)
+                    if day.contains(month) {
+                        i += 1
+                    }
+                    
+                    if index == cartItems.count - 1 {
+                        countArray.insert(i, at: monthIndex)
+                        completion(countArray, uniqueMonths)
+                    }
                 }
             }
         }

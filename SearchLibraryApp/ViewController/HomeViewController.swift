@@ -15,33 +15,6 @@ class HomeViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var homeModel: HomeModel? {
-        didSet {
-            registerModel()
-        }
-    }
-    
-    private var createdDays: [Date] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                print(self.createdDays)
-                self.totalReadLabel.text = String(self.createdDays.count)
-                
-                let week = Date().toStringWithCurrentLocale().prefix(7)
-                var count: Int = 0
-                self.createdDays.forEach { singleDay in
-                    
-                    let day = singleDay.toStringWithCurrentLocale()
-                    
-                    if day.contains(week) {
-                        count += 1
-                        self.monthReadLabel.text = String(count)
-                    }
-                }
-            }
-        }
-    }
-    
     var locationManager: CLLocationManager!
     
     @IBOutlet weak var totalReadLabel: UILabel!
@@ -50,10 +23,12 @@ class HomeViewController: UIViewController {
     
     var chartDataSet: LineChartDataSet!
     
+    private var presenter: HomePresenterInput!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.homeModel = HomeModel()
+
+        self.presenter = HomePresenter(output: self, model: HomeModel())
         
         self.navigationItem.title = "ホーム"
         
@@ -62,22 +37,8 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        self.homeModel?.fetchAllItem()
-        self.homeModel?.distributeItem { countArray, chartLabels in
-            self.getChart(labels: chartLabels, rawData: countArray)
-        }
-    }
-    
-    private func registerModel() {
-        
-        guard let model = homeModel else { return }
-        
-        model.notificationCenter.addObserver(forName: .init(rawValue: HomeModel.notificationName), object: nil, queue: nil) { notification in
-            
-            if let createdDays = notification.userInfo?["createdDays"] as? [Date] {
-                self.createdDays = createdDays
-            }
-        }
+        presenter.didFetchAllItem()
+        presenter.didDistributeItem()
     }
     
     private func getChart(labels: [String], rawData: [Int]){
@@ -182,8 +143,36 @@ extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        
-        self.homeModel?.searchLocationLibrary(latitude: locValue.latitude, longitude: locValue.longitude)
+        if let locValue: CLLocationCoordinate2D = manager.location?.coordinate {
+            
+            presenter.didSearchLocationLibrary(latitude: locValue.latitude, logitude: locValue.longitude)
+        }
+    }
+}
+
+extension HomeViewController: HomePresenterOutput {
+    
+    func updateTotalLabels(days: [Date]) {
+        DispatchQueue.main.async {
+            
+            self.totalReadLabel.text = String(days.count)
+            
+            let week = Date().toStringWithCurrentLocale().prefix(7)
+            var count: Int = 0
+            
+            days.forEach { singleDay in
+                
+                let day = singleDay.toStringWithCurrentLocale()
+                
+                if day.contains(week) {
+                    count += 1
+                    self.monthReadLabel.text = String(count)
+                }
+            }
+        }
+    }
+    
+    func makingChart(counts: [Int], labels: [String]) {
+        self.getChart(labels: labels, rawData: counts)
     }
 }
