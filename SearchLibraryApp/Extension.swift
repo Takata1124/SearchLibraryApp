@@ -29,6 +29,10 @@ extension Date {
 }
 
 extension UIColor {
+    
+    class var modeColor: UIColor {
+        return UIColor(named: "modeColor")!
+    }
 
     class var modeTextColor: UIColor {
         return UIColor(named: "modeTextColor")!

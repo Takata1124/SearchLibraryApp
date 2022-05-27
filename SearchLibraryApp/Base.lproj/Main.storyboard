@@ -25,7 +25,7 @@
                                     <constraint firstAttribute="width" constant="200" id="Xl6-o1-sYD"/>
                                     <constraint firstAttribute="height" constant="50" id="w8o-cx-bQR"/>
                                 </constraints>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" name="modeTextColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Isbn"/>
                                 <connections>
@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" constant="50" id="RM8-ga-PUh"/>
                                     <constraint firstAttribute="width" constant="200" id="jkI-fD-FDn"/>
                                 </constraints>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" name="modeTextColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="バーコード"/>
                                 <connections>
@@ -53,7 +53,7 @@
                                     <constraint firstAttribute="width" constant="200" id="8I4-9L-7Lq"/>
                                     <constraint firstAttribute="height" constant="50" id="djY-zV-5W8"/>
                                 </constraints>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" name="modeTextColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="簡易検索"/>
                                 <connections>
@@ -1265,7 +1265,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yCj-Ec-kwN"/>
+        <segue reference="7Bv-hv-vvj"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>

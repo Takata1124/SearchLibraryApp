@@ -7,10 +7,13 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 class SettingDetailView: UIView {
     
     private let appDelegateWindow = UIApplication.shared.windows.first
+    
+    var locationManager: CLLocationManager!
     
     var modeSwitch = BaseSwitch()
     var modeLabel = BaseLabel(frame: CGRect(x: UIScreen.main.bounds.width / 2 - 50, y: 300, width: 100, height: 50))
@@ -19,10 +22,10 @@ class SettingDetailView: UIView {
     var modeSelect: Bool = false {
         didSet {
             if modeSelect {
-                modeLabel.text = "dark"
+                modeLabel.text = "ダーク"
                 modeSwitch.isOn = true
             } else {
-                modeLabel.text = "light"
+                modeLabel.text = "ライト"
                 modeSwitch.isOn = false
             }
         }
@@ -36,7 +39,7 @@ class SettingDetailView: UIView {
     
     override init(frame: CGRect){
         super.init(frame: frame)
-        
+
     }
     
     required init?(coder: NSCoder) {
@@ -55,6 +58,9 @@ class SettingDetailView: UIView {
         case "ダークモード":
             darkModeSetupLayout()
             
+        case "位置情報設定":
+            setupLocationManager()
+            
         default:
             print("default")
         }
@@ -64,12 +70,25 @@ class SettingDetailView: UIView {
         
         self.addSubview(modeLabel)
         self.addSubview(modeSwitch)
-        
-
+    
         if appDelegateWindow?.overrideUserInterfaceStyle == .dark {
             modeSelect = true
         } else {
             modeSelect = false
         }
+    }
+    
+    private func setupLocationManager() {
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+    }
+}
+
+extension SettingDetailView: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        print(status.rawValue)
     }
 }

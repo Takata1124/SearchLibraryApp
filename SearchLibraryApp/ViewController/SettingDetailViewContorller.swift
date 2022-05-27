@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import CoreLocation
 
 class SettingDetailViewController: UIViewController {
     
@@ -16,6 +17,7 @@ class SettingDetailViewController: UIViewController {
     let settingDetailView = SettingDetailView()
     
     private let appDelegateWindow = UIApplication.shared.windows.first
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +32,6 @@ class SettingDetailViewController: UIViewController {
     override func viewDidLayoutSubviews() {
 
         settingDetailView.snp.makeConstraints { make in
-            
             make.top.equalTo(self.view.snp.top)
             make.bottom.equalTo(self.view.snp.bottom).offset(-100)
             make.left.equalTo(self.view.snp.left)
@@ -43,7 +44,7 @@ class SettingDetailViewController: UIViewController {
         settingDetailView.confirmSelectCell(selectCell: self.selectCell)
         settingDetailView.modeSwitch.addTarget(self, action: #selector(modeChange), for: UIControl.Event.valueChanged)
     }
-    
+
     @objc func modeChange(sender: UISwitch) {
         
         if #available(iOS 13.0, *) {

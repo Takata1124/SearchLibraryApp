@@ -91,11 +91,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "goDetail" {
-            let isbnView = segue.destination as! IsbnViewController
-            isbnView.item = self.item
-            isbnView.isRead = self.read
-            isbnView.isStar = self.star
-            isbnView.isHiddenItems = true
+            let isbnViewController = segue.destination as! IsbnViewController
+            isbnViewController.item = self.item
+            isbnViewController.isRead = self.read
+            isbnViewController.isStar = self.star
+            isbnViewController.isHiddenItems = true
         }
     }
     

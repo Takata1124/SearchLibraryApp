@@ -27,11 +27,11 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.presenter = HomePresenter(output: self, model: HomeModel())
         
         self.navigationItem.title = "ホーム"
-        
+
+        self.presenter = HomePresenter(output: self, model: HomeModel())
+    
         setupLocationManager()
     }
     
@@ -56,7 +56,7 @@ class HomeViewController: UIViewController {
         // X軸のラベルの位置を下に設定
         barChart.xAxis.labelPosition = .bottom
         // X軸のラベルの色,文字サイズを設定
-        barChart.xAxis.labelTextColor = .black
+        barChart.xAxis.labelTextColor = .modeTextColor
         barChart.xAxis.labelFont = UIFont(name: "HelveticaNeue-Light", size: 8.0)!
         // X軸の線、グリッドを非表示にする
         barChart.xAxis.drawGridLinesEnabled = false
@@ -71,9 +71,9 @@ class HomeViewController: UIViewController {
         // ラベルの数を設定
         barChart.leftAxis.labelCount = 10
         // ラベルの色を設定
-        barChart.leftAxis.labelTextColor = .black
+        barChart.leftAxis.labelTextColor = .modeTextColor
         // グリッドの色を設定
-        barChart.leftAxis.gridColor = .gray
+        barChart.leftAxis.gridColor = .modeTextColor
         // 軸線は非表示にする
         barChart.leftAxis.drawAxisLineEnabled = false
         //凡例削除
@@ -86,7 +86,7 @@ class HomeViewController: UIViewController {
         barChart.dragDecelerationEnabled = true //指を離してもスクロール続くか
         barChart.dragDecelerationFrictionCoef = 0.6 //ドラッグ時の減速スピード(0-1)
         barChart.chartDescription.text = nil //Description(今回はなし)
-        barChart.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) //Background Color
+        barChart.backgroundColor = .modeColor //Background Color
         barChart.doubleTapToZoomEnabled = false  //ダブルタップでの拡大禁止
         //        barChart.animate(xAxisDuration: 2.5, yAxisDuration: 2.5, easingOption: .linear) //グラフのアニメーション(秒数で設定)
     }
@@ -121,6 +121,8 @@ class HomeViewController: UIViewController {
 extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        print("didChangeAuthorization status=\(status.rawValue)")
         
         switch status {
             // 許可されてない場合
@@ -160,11 +162,11 @@ extension HomeViewController: HomePresenterOutput {
             let week = Date().toStringWithCurrentLocale().prefix(7)
             var count: Int = 0
             
-            days.forEach { singleDay in
+            days.forEach { day in
                 
-                let day = singleDay.toStringWithCurrentLocale()
+                let dayString = day.toStringWithCurrentLocale()
                 
-                if day.contains(week) {
+                if dayString.contains(week) {
                     count += 1
                     self.monthReadLabel.text = String(count)
                 }
