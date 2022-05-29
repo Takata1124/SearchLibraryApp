@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import CoreLocation
 
 class SettingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -22,8 +23,12 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
     
     var selectCell: String = ""
     
+    var locationManager: CLLocationManager!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.hidesBackButton = true
         
         let baseStackView = UIStackView(arrangedSubviews: [settingTableView])
         baseStackView.axis = .vertical
@@ -70,7 +75,6 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.deselectRow(at: indexPath, animated: true)
         
         let selectCell = settings[indexPath.row]
-        
         goSelectView(selectCell: selectCell)
     }
     
@@ -94,9 +98,7 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
         case "アプリバージョン":
             
             let version: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-            
             let alert = UIAlertController(title: "アプリのバージョン", message: "現在のアプリのバージョンは\(version)", preferredStyle: .alert)
-            
             let addActionAlert: UIAlertAction = UIAlertAction(title: "確認", style: .default, handler: { _ in
                 
                 alert.dismiss(animated: false, completion: nil)
@@ -106,13 +108,76 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
             
             present(alert, animated: true)
             
+        case "データの削除":
+            
+            let alert = UIAlertController(title: "データの削除", message: "データの削除を実施しますか？", preferredStyle: .alert)
+            let addOkAlert: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
+                
+                alert.dismiss(animated: false, completion: nil)
+            })
+            
+            let addNgAlert: UIAlertAction = UIAlertAction(title: "NG", style: .default, handler: { _ in
+                
+                alert.dismiss(animated: false, completion: nil)
+            })
+            
+            alert.addAction(addOkAlert)
+            alert.addAction(addNgAlert)
+            
+            present(alert, animated: true)
+            
+        case "位置情報設定":
+            
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+
         default:
             
             self.selectCell = selectCell
             
             performSegue(withIdentifier: "goSettingDetail", sender: nil)
         }
+    }
+}
+
+extension SettingViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
+        if status.rawValue != 4 {
+            
+            let alert = UIAlertController(title: "位置情報が許可されていません", message: "位置情報を設定しますか？", preferredStyle: .alert)
+            let addOkAlert: UIAlertAction = UIAlertAction(title: "はい", style: .default, handler: { _ in
+                
+                alert.dismiss(animated: false, completion: nil)
+
+                if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+                   UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            })
+            
+            let addNgAlert: UIAlertAction = UIAlertAction(title: "いいえ", style: .default, handler: { _ in
+                
+                alert.dismiss(animated: false, completion: nil)
+            })
+
+            alert.addAction(addOkAlert)
+            alert.addAction(addNgAlert)
+            
+            present(alert, animated: true)
+            
+        } else {
+           
+            let alert = UIAlertController(title: "位置情報", message: "位置情報の取得が許可されています", preferredStyle: .alert)
+            let addOkAlert: UIAlertAction = UIAlertAction(title: "確認", style: .default, handler: { _ in
+                
+                alert.dismiss(animated: false, completion: nil)
+            })
+            
+            alert.addAction(addOkAlert)
+            
+            present(alert, animated: true)
+        }
     }
 }
 

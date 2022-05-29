@@ -121,9 +121,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
-        print("didChangeAuthorization status=\(status.rawValue)")
-        
+
         switch status {
             // 許可されてない場合
         case .notDetermined:

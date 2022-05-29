@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 import CoreLocation
+import WebKit
+import SnapKit
 
 class SettingDetailView: UIView {
     
@@ -37,6 +39,8 @@ class SettingDetailView: UIView {
         }
     }
     
+    let webView = WKWebView()
+    
     override init(frame: CGRect){
         super.init(frame: frame)
 
@@ -58,8 +62,14 @@ class SettingDetailView: UIView {
         case "ダークモード":
             darkModeSetupLayout()
             
-        case "位置情報設定":
-            setupLocationManager()
+        case "取扱説明":
+            setupWebView(url: "https://mo-gu-mo-gu.com/ios-wkwebview-tutorial/")
+            
+        case "ライセンス":
+            setupWebView(url: "https://mo-gu-mo-gu.com/ios-wkwebview-tutorial/")
+            
+        case "プライバシーポリシー":
+            setupWebView(url: "https://mo-gu-mo-gu.com/ios-wkwebview-tutorial/")
             
         default:
             print("default")
@@ -82,6 +92,23 @@ class SettingDetailView: UIView {
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
+    }
+    
+    private func setupWebView(url: String) {
+        
+        self.backgroundColor = .red
+        
+        self.addSubview(webView)
+  
+        let request = URLRequest(url: URL(string: url)!)
+        webView.load(request)
+        
+        webView.snp.makeConstraints { make in
+            make.top.equalTo(self.snp.top)
+            make.bottom.equalTo(self.snp.bottom)
+            make.left.equalTo(self.snp.left)
+            make.right.equalTo(self.snp.right)
+        }
     }
 }
 

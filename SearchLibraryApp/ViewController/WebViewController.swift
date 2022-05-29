@@ -32,6 +32,8 @@ class WebViewController: UIViewController {
         
         self.title = String(webTitle)
         
+        self.navigationItem.hidesBackButton = true
+        
         baseView.addSubview(webView)
         
         let request = URLRequest(url: URL(string: "\(articleUrl)")!)

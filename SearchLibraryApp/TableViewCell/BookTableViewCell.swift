@@ -21,7 +21,7 @@ class BookTableViewCell: UITableViewCell {
             if borrowSituation == "貸出可" {
                 self.borrowLabel.textColor = .red
             } else {
-                self.borrowLabel.textColor = .black
+                self.borrowLabel.textColor = .modeTextColor
             }
         }
     }
@@ -33,9 +33,6 @@ class BookTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-//        self.layer.borderWidth = 0.5
-//        self.layer.borderColor = UIColor.black.cgColor
         
         webButton.addTarget(self, action: #selector(self.doOpenWeb(_:)), for: UIControl.Event.touchUpInside)
         mapButton.addTarget(self, action: #selector(self.doOpenMap(_:)), for: UIControl.Event.touchUpInside)

@@ -41,8 +41,12 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var coverImage: UIImageView!
     @IBOutlet weak var libraryTableView: UITableView!
     
+    private var presenter : SelectBookPresenterInput!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.presenter = SelectBookPresenter(output: self, model: SelectBookModel())
         
         libraryTableView.delegate = self
         libraryTableView.dataSource = self
@@ -72,7 +76,11 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
             self.performSegue(withIdentifier: "goLocation", sender: nil)
         }
         
-        HUD.show(.progress, onView: self.view)
+        if appDelegate.totalArray.count != 0 {
+            HUD.show(.progress, onView: self.view)
+        } else {
+            setupAlert()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,56 +95,34 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
         self.isbnLabel.text = item?.isbn
         self.pubdateLabel.text = item?.salesDate
         self.coverImage.image = self.uiImage
+        
+        self.navigationItem.hidesBackButton = true
     }
     
-    private func searchBooks(isbn: String, systemId: String, completion: @escaping(String) -> Void) {
+    private func setupAlert() {
         
-        let api_key = Apikey().libraryApikey
+        let alert = UIAlertController(title: "位置情報が許可されていません", message: "位置情報を設定しますか？", preferredStyle: .alert)
         
-        let url = "https://api.calil.jp/check?appkey=\(api_key)&isbn=\(isbn)&systemid=\(systemId)&callback=no&format=json"
-        
-        AF.request(url).responseJSON { response in
+        let addOkAlert: UIAlertAction = UIAlertAction(title: "はい", style: .default, handler: { _ in
             
-            guard let data = response.data else {
-                completion("蔵書なし")
-                return
+            alert.dismiss(animated: false, completion: nil)
+            if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+               UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
             
-            do {
-                let json = try JSON(data: data)
-                
-                guard let conTinue = json["continue"].int else {
-                    completion("蔵書なし")
-                    return
-                }
-                
-                if conTinue == 0 {
-                    
-                    guard let situation = json["books"]["\(isbn)"]["\(systemId)"]["libkey"].dictionary else {
-                        completion("蔵書なし")
-                        return
-                    }
-                    
-                    if let key = situation.keys.first {
-                        
-                        guard let borrow = situation[key] else {
-                            completion("蔵書なし")
-                            return
-                        }
-                        
-                        let result = borrow.rawValue as! String
-                        completion(result)
-                    }
-                    else {
-                        completion("蔵書なし")
-                    }
-                } else {
-                    completion("検索中")
-                }
-            } catch {
-                completion("検出不可")
-            }
-        }
+            self.navigationController?.popViewController(animated: true)
+        })
+        
+        let addNgAlert: UIAlertAction = UIAlertAction(title: "いいえ", style: .default, handler: { _ in
+            
+            alert.dismiss(animated: false, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+        })
+
+        alert.addAction(addOkAlert)
+        alert.addAction(addNgAlert)
+        
+        present(alert, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -150,12 +136,12 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let name = appDelegate.totalArray[indexPath.row].name
         let systemId = appDelegate.totalArray[indexPath.row].systemId
-        let url = appDelegate.totalArray[indexPath.row].url_pc
+        let url = appDelegate.totalArray[indexPath.row].pcUrl
         let latitude = appDelegate.totalArray[indexPath.row].latitude
         let longitude = appDelegate.totalArray[indexPath.row].longitude
         let webTitle = appDelegate.totalArray[indexPath.row].name
         
-        searchBooks(isbn: self.isbnLabel.text ?? "", systemId: systemId) { text in
+        presenter.searchBook(isbn: self.isbnLabel.text ?? "", systemId: systemId) { text in
             self.resultArray.append(text)
             cell.borrowSituation = text
             cell.libraryName.text = name
@@ -194,7 +180,10 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func goBackView(_ sender: Any) {
-        
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+extension SelectBookViewController: SelectBookPresenterOutput {
+    
 }

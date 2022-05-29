@@ -107,7 +107,6 @@ class CartModel: CartModelInput {
             fetchRequest.sortDescriptors = [sort]
             
             do {
-                
                 var isNewOrder = isNewOrder
                 isNewOrder.toggle()
                 
@@ -127,9 +126,7 @@ class CartModel: CartModelInput {
         let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
         
         if searchText != "" {
-            
-//            cartItemModel.removeAll()
-            
+
             fetchRequest.predicate = NSPredicate(format:"title CONTAINS %@ || author CONTAINS %@", "\(searchText)", "\(searchText)")
             
             do {
@@ -140,7 +137,6 @@ class CartModel: CartModelInput {
                 print(error)
             }
         }
-        
         completion([])
     }
 }

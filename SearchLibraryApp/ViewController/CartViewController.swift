@@ -71,6 +71,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         coreDataTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
         
+        self.navigationItem.hidesBackButton = true
+        
         let tapGR: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGR.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGR)
@@ -193,7 +195,6 @@ extension CartViewController {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
             self.presenter.didTapSelectRemoveItem(index: indexPath.row)
         }
     }

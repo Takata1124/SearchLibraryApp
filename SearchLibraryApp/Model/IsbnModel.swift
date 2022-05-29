@@ -139,7 +139,7 @@ class IsbnModel: IsbnModelInput {
                 }
                 
             case .failure(let error):
-//                self.detailText = "見つかりませんでした"
+                
                 print("error:\(error)")
                 
                 completion(item)

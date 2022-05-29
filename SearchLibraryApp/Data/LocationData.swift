@@ -28,5 +28,5 @@ struct Spot {
     let latitude: String
     let longitude: String
     let distance: Double
-    let url_pc: String
+    let pcUrl: String
 }

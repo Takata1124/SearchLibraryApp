@@ -18,7 +18,6 @@ class SettingDetailViewController: UIViewController {
     
     private let appDelegateWindow = UIApplication.shared.windows.first
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +39,8 @@ class SettingDetailViewController: UIViewController {
     }
     
     private func setupLayout() {
+        
+        self.navigationItem.hidesBackButton = true
         
         settingDetailView.confirmSelectCell(selectCell: self.selectCell)
         settingDetailView.modeSwitch.addTarget(self, action: #selector(modeChange), for: UIControl.Event.valueChanged)

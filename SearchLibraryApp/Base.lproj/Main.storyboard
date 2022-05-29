@@ -467,17 +467,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="Y8u-j8-gRR">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="yRl-00-SxV">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="S7F-kn-2nd">
-                                <rect key="frame" x="20" y="5" width="92" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="house" catalog="system"/>
-                                <connections>
-                                    <action selector="goHome:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JEx-ff-JFK"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="atS-30-F4O">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="PJX-Rb-ei3">
                                 <rect key="frame" x="302" y="5" width="92" height="34.5"/>
@@ -663,7 +652,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcM-Qb-PaK">
                                 <rect key="frame" x="0.0" y="88" width="414" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Le-kH-Amg">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Le-kH-Amg">
                                         <rect key="frame" x="57" y="10" width="300" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="0UR-QY-NPO"/>
@@ -860,19 +849,7 @@
                             <constraint firstItem="edN-cF-Epl" firstAttribute="trailing" secondItem="9Qd-KK-Z7V" secondAttribute="trailing" id="mMR-Sx-22D"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6tG-do-SY3">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="ztm-Vg-zjt">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="9UL-uB-Cmk">
-                                <rect key="frame" x="20" y="5" width="92" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="house" catalog="system"/>
-                                <connections>
-                                    <action selector="goHomeView:" destination="j3C-dH-k08" eventType="touchUpInside" id="DZD-Je-Hna"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="6tG-do-SY3"/>
                     <connections>
                         <outlet property="collectionTable" destination="9Qd-KK-Z7V" id="Flx-CI-n8B"/>
                         <outlet property="searchBar" destination="ykx-YZ-XxC" id="TR7-dW-FHX"/>
@@ -988,6 +965,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="plb-M5-1CA">
                                                 <rect key="frame" x="0.0" y="0.0" width="103.5" height="59.5"/>
+                                                <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="building" catalog="system">
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -998,17 +976,20 @@
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="図書館" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gw0-Pt-B6P">
                                                 <rect key="frame" x="0.0" y="40.5" width="103.5" height="59.5"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <color key="tintColor" systemColor="labelColor"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WrH-Nk-gya">
                                         <rect key="frame" x="103.5" y="0.0" width="103.5" height="100"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9t-eu-949">
                                                 <rect key="frame" x="0.0" y="0.0" width="103.5" height="59.5"/>
+                                                <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="magnifyingglass" catalog="system">
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1019,17 +1000,20 @@
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="探す" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddV-Po-g6Q">
                                                 <rect key="frame" x="0.0" y="40.5" width="103.5" height="59.5"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <color key="tintColor" systemColor="labelColor"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kb4-dR-uVd">
                                         <rect key="frame" x="207" y="0.0" width="103.5" height="100"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MjR-92-owX">
                                                 <rect key="frame" x="0.0" y="0.0" width="103.5" height="59.5"/>
+                                                <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="book.closed" catalog="system">
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1040,17 +1024,20 @@
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="記録" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Is-2C-QP2">
                                                 <rect key="frame" x="0.0" y="40.5" width="103.5" height="59.5"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <color key="tintColor" systemColor="labelColor"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5YN-N9-5Hh">
                                         <rect key="frame" x="310.5" y="0.0" width="103.5" height="100"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Crm-0j-Uwa">
                                                 <rect key="frame" x="0.0" y="0.0" width="103.5" height="59.5"/>
+                                                <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="gearshape" catalog="system">
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1061,11 +1048,13 @@
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設定" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsb-2F-7Do">
                                                 <rect key="frame" x="0.0" y="40.5" width="103.5" height="59.5"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <color key="tintColor" systemColor="labelColor"/>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
@@ -1082,10 +1071,10 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="UJ6-Ie-ZaY">
-                                <rect key="frame" x="57" y="662" width="300" height="84"/>
+                                <rect key="frame" x="57" y="629" width="300" height="117"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sY3-X1-P7B">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="84"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="117"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="tvS-JZ-sP1">
                                                 <rect key="frame" x="0.0" y="1.5" width="150" height="27.5"/>
@@ -1100,8 +1089,8 @@
                                                 <color key="textColor" name="modeTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9q-k1-29S">
-                                                <rect key="frame" x="0.0" y="67" width="150" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9q-k1-29S">
+                                                <rect key="frame" x="0.0" y="67" width="150" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" name="modeTextColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1109,7 +1098,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xgH-HK-i8V">
-                                        <rect key="frame" x="150" y="0.0" width="150" height="84"/>
+                                        <rect key="frame" x="150" y="0.0" width="150" height="117"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.closed" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pTQ-Gr-rW0">
                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
@@ -1124,8 +1113,8 @@
                                                 <color key="textColor" name="modeTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYY-Zw-QLM">
-                                                <rect key="frame" x="0.0" y="67" width="150" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYY-Zw-QLM">
+                                                <rect key="frame" x="0.0" y="67" width="150" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" name="modeTextColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1265,7 +1254,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7Bv-hv-vvj"/>
+        <segue reference="Il8-My-sUC"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
@@ -1274,7 +1263,6 @@
         <image name="building" catalog="system" width="112" height="128"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
-        <image name="house" catalog="system" width="128" height="106"/>
         <image name="keyboard" catalog="system" width="128" height="79"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="plus" catalog="system" width="128" height="113"/>

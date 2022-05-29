@@ -73,7 +73,7 @@ class HomeModel: HomeModelInput {
         let count: Int = 6
         let libraryApikey: String = Apikey().libraryApikey
         let url: String = "https://api.calil.jp/library?appkey=\(libraryApikey)&callback=&geocode=\(longitude),\(latitude)&limit=\(String(count))&format=json"
-        var totalArray: [Spot] = []
+        var temporarySpotArray: [Spot] = []
         var i = 0
         
         AF.request(url).responseDecodable(of: [LocationData].self, decoder: JSONDecoder()) { response in
@@ -90,12 +90,11 @@ class HomeModel: HomeModelInput {
                     let latitude = singleData.geocode.components(separatedBy: ",")[1]
                     let url_pc = singleData.url_pc
                     
-                    let spot = Spot(name: name, systemId: systemid, latitude: latitude, longitude: longitude, distance: distance, url_pc: url_pc)
-                    
-                    totalArray.append(spot)
+                    let spot = Spot(name: name, systemId: systemid, latitude: latitude, longitude: longitude, distance: distance, pcUrl: url_pc)
+                    temporarySpotArray.append(spot)
                     
                     if i == data.count {
-                        self.appDelegate.totalArray = totalArray
+                        self.appDelegate.totalArray = temporarySpotArray
                     }
                 }
             }
