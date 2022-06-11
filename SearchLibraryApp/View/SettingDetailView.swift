@@ -89,7 +89,7 @@ class SettingDetailView: UIView {
             setupWebView(url: "https://mo-gu-mo-gu.com/ios-wkwebview-tutorial/")
             
         case "プライバシーポリシー":
-            setupWebView(url: "https://takata1124.github.io/SearchLibraryApp/PrivacyPolicy/ja.md")
+            setupWebView(url: "https://takata1124.github.io/SearchLibraryApp/PrivacyPolicy/privacy.html")
             
         case "データの表示順":
             orderSetupLayout()
