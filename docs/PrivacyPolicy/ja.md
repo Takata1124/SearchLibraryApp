@@ -1,3 +1,3 @@
-プライバシーポリシー
+hello world
 
-
+hello world
