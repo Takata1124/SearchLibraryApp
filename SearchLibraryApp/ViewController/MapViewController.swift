@@ -16,7 +16,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var spendTime: Double = 0 {
         didSet {
             let time = spendTime.description.prefix(4)
-            spendingTimeLabel.text = "歩いて\(time)分かかります"
+//            spendingTimeLabel.text = "歩いて\(time)分かかります"
         }
     }
     

@@ -9,14 +9,15 @@ import Foundation
 import UIKit
 import SnapKit
 import CoreLocation
+import SQLite
 
 class SettingDetailViewController: UIViewController {
     
     var selectCell: String = ""
-    
     let settingDetailView = SettingDetailView()
-    
     private let appDelegateWindow = UIApplication.shared.windows.first
+    
+    var database = Database()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +42,17 @@ class SettingDetailViewController: UIViewController {
     private func setupLayout() {
         
         self.navigationItem.hidesBackButton = true
-        
+ 
         settingDetailView.confirmSelectCell(selectCell: self.selectCell)
         settingDetailView.modeSwitch.addTarget(self, action: #selector(modeChange), for: UIControl.Event.valueChanged)
+        settingDetailView.orderSwitch.addTarget(self, action: #selector(orderChange), for: UIControl.Event.valueChanged)
+        
+        if self.selectCell == "データの表示順" {
+
+            let result = database.findById(id: 1)
+            let currentOrder = result[0].isNewOrder
+            settingDetailView.setupOrderSwitch(isNewOrder: currentOrder)
+        }
     }
 
     @objc func modeChange(sender: UISwitch) {
@@ -61,8 +70,19 @@ class SettingDetailViewController: UIViewController {
         }
     }
     
-    @IBAction func goBackView(_ sender: Any) {
+    @objc func orderChange(sender: UISwitch) {
         
+        let onCheck: Bool = sender.isOn
+        if onCheck {
+            settingDetailView.orderSelect = true
+            database.update(rowId: 1, isNewOrder: true)
+        } else {
+            settingDetailView.orderSelect = false
+            database.update(rowId: 1, isNewOrder: false)
+        }
+    }
+    
+    @IBAction func goBackView(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
 }

@@ -33,6 +33,21 @@ class SettingDetailView: UIView {
         }
     }
     
+    var orderSelect: Bool = false {
+        didSet {
+            if orderSelect {
+                modeLabel.text = "新しい順"
+                orderSwitch.isOn = true
+            } else {
+                modeLabel.text = "古い順"
+                orderSwitch.isOn = false
+            }
+        }
+    }
+    
+    var orderSwitch = BaseSwitch()
+    
+    
     var selectCell: String = ""  {
         didSet {
             selectCategorySetting(selectCell: selectCell)
@@ -55,6 +70,11 @@ class SettingDetailView: UIView {
         self.selectCell = selectCell
     }
     
+    func setupOrderSwitch(isNewOrder: Bool) {
+        
+        self.orderSelect = isNewOrder
+    }
+    
     private func selectCategorySetting(selectCell: String) {
         
         switch selectCell {
@@ -71,6 +91,9 @@ class SettingDetailView: UIView {
         case "プライバシーポリシー":
             setupWebView(url: "https://mo-gu-mo-gu.com/ios-wkwebview-tutorial/")
             
+        case "データの表示順":
+            orderSetupLayout()
+            
         default:
             print("default")
         }
@@ -86,6 +109,12 @@ class SettingDetailView: UIView {
         } else {
             modeSelect = false
         }
+    }
+    
+    private func orderSetupLayout() {
+        
+        self.addSubview(modeLabel)
+        self.addSubview(orderSwitch)
     }
     
     private func setupLocationManager() {

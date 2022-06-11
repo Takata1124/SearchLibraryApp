@@ -11,22 +11,31 @@ import CoreData
 
 protocol CartModelInput {
     
-    func fetchAllItem() -> [CartItem]
+    func fetchAllItem(isOrder: Bool) -> [CartItem]
     func deleteSelectedItem(item: CartItem, completion: @escaping(Bool) -> ())
-    func filterStarItem(isStarFilter: Bool, completion: @escaping([CartItem], Bool) -> ())
-    func filterReadItem(isRead: Bool, completion: @escaping([CartItem], Bool) -> ())
+    func filterStarItem(isStarFilter: Bool, isOrder: Bool, completion: @escaping([CartItem], Bool) -> ())
+    func filterReadItem(isRead: Bool, isOrder: Bool, completion: @escaping([CartItem], Bool) -> ())
     func changeOrderItem(isNewOrder: Bool, completion: @escaping([CartItem], Bool) -> ())
     func searchItem(searchText: String, completion: @escaping([CartItem]) -> ())
+    func getOrderSituation(completion: @escaping(Bool) -> ())
+    func updateDatabaseOrder(isOrder: Bool, completion: () -> Void)
 }
 
 class CartModel: CartModelInput {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    func fetchAllItem() -> [CartItem] {
+    let database = Database()
+    
+    func fetchAllItem(isOrder: Bool) -> [CartItem] {
+        
+        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: isOrder)]
+        
         do {
-            let cartItems = try context.fetch(CartItem.fetchRequest())
-            return cartItems
+            let cartItem = try context.fetch(fetchRequest)
+            return cartItem
         } catch {
             print("error")
             return []
@@ -36,7 +45,6 @@ class CartModel: CartModelInput {
     func deleteSelectedItem(item: CartItem, completion: @escaping(Bool) -> ()) {
         
         context.delete(item)
-        
         do {
             try context.save()
             completion(true)
@@ -46,7 +54,7 @@ class CartModel: CartModelInput {
         }
     }
     
-    func filterStarItem(isStarFilter: Bool, completion: @escaping([CartItem], Bool) -> ()){
+    func filterStarItem(isStarFilter: Bool, isOrder: Bool, completion: @escaping([CartItem], Bool) -> ()){
         
         let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
         
@@ -55,6 +63,8 @@ class CartModel: CartModelInput {
         } else {
             fetchRequest.predicate = NSPredicate(format: "star = %d", false)
         }
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: isOrder)]
         
         var isStarFilter = isStarFilter
         isStarFilter.toggle()
@@ -68,7 +78,7 @@ class CartModel: CartModelInput {
         }
     }
     
-    func filterReadItem(isRead: Bool, completion: @escaping([CartItem], Bool) -> ()) {
+    func filterReadItem(isRead: Bool, isOrder: Bool, completion: @escaping([CartItem], Bool) -> ()) {
         
         let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
         
@@ -77,6 +87,8 @@ class CartModel: CartModelInput {
         } else {
             fetchRequest.predicate = NSPredicate(format: "read = %d", false)
         }
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: isOrder)]
         
         var isRead = isRead
         isRead.toggle()
@@ -97,9 +109,9 @@ class CartModel: CartModelInput {
         let sort: NSSortDescriptor?
         
         if isNewOrder == false {
-            sort = NSSortDescriptor(key: "pubDate", ascending: true)
+            sort = NSSortDescriptor(key: "createdAt", ascending: true)
         } else {
-            sort = NSSortDescriptor(key: "pubDate", ascending: false)
+            sort = NSSortDescriptor(key: "createdAt", ascending: false)
         }
         
         if let sort = sort {
@@ -121,6 +133,15 @@ class CartModel: CartModelInput {
         completion([], false)
     }
     
+    func updateDatabaseOrder(isOrder: Bool, completion: () -> Void) {
+        
+        print(isOrder)
+        
+        let database = Database()
+        database.update(rowId: 1, isNewOrder: isOrder)
+        completion()
+    }
+    
     func searchItem(searchText: String, completion: @escaping([CartItem]) -> ()) {
         
         let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
@@ -137,6 +158,18 @@ class CartModel: CartModelInput {
                 print(error)
             }
         }
+        
         completion([])
+    }
+    
+    func getOrderSituation(completion: @escaping(Bool) -> ()) {
+        
+        let result = database.findById(id: 1)
+        if result != [] {
+            let currentOrder = result[0].isNewOrder
+            completion(currentOrder)
+        } else {
+            completion(false)
+        }
     }
 }

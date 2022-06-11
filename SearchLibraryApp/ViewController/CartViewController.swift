@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 import Alamofire
 import AlamofireImage
+import SQLite
 
 class CartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -22,15 +23,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     var star: Bool = false
     var read: Bool = false
     
-    var isNewOrder: Bool = false {
-        didSet {
-            if isNewOrder {
-                self.orderButton.setTitle("新しい", for: .normal)
-            } else {
-                self.orderButton.setTitle("古い", for: .normal)
-            }
-        }
-    }
+    var isNewOrder: Bool = false
     
     var isRead: Bool = false {
         
@@ -88,6 +81,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         
         self.coreDataTableView.reloadData()
+        
+        presenter.didGetOrderSituation { isOrder in
+            self.presenter.didTapChangeOrder(isNewOrder: isOrder)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -17,8 +17,9 @@ protocol CartPresenterInput: AnyObject {
     func didTapFilterRead(isRead: Bool)
     func didTapChangeOrder(isNewOrder: Bool)
     func didTapSearchButton(searchText: String)
+    func didGetOrderSituation(completion: @escaping(Bool) -> ())
 }
-// 出力
+
 protocol CartPresenterOutput: AnyObject {
     
     func updateTable()
@@ -37,7 +38,7 @@ class CartPresenter {
     init(output: CartPresenterOutput, model: CartModelInput) {
         self.output = output
         self.model = model
-        self.cartItem = model.fetchAllItem()
+        self.cartItem = model.fetchAllItem(isOrder: false)
     }
 }
 
@@ -45,9 +46,11 @@ extension CartPresenter: CartPresenterInput {
     
     func didTapReloadTable() {
         
-        self.cartItem = self.model.fetchAllItem()
-        DispatchQueue.main.async {
-            self.output?.updateTable()
+        model.getOrderSituation { isOrder in
+            self.cartItem = self.model.fetchAllItem(isOrder: isOrder)
+            DispatchQueue.main.async {
+                self.output?.updateTable()
+            }
         }
     }
     
@@ -64,9 +67,11 @@ extension CartPresenter: CartPresenterInput {
         model.deleteSelectedItem(item: cartItem[index]) { success in
             
             if success {
-                self.cartItem = self.model.fetchAllItem()
-                DispatchQueue.main.async {
-                    self.output?.updateTable()
+                self.model.getOrderSituation { isOrder in
+                    self.cartItem = self.model.fetchAllItem(isOrder: isOrder)
+                    DispatchQueue.main.async {
+                        self.output?.updateTable()
+                    }
                 }
             }
         }
@@ -74,39 +79,50 @@ extension CartPresenter: CartPresenterInput {
     
     func didTapFilterStar(isStarFiter: Bool) {
         
-        model.filterStarItem(isStarFilter: isStarFiter) { item, isStarFilter  in
-         
-            self.cartItem = item
+        model.getOrderSituation { isOrder in
             
-            DispatchQueue.main.async {
-                self.output?.updateTable()
-                self.output?.updateIsStarFilterSituation(isStarFilter: isStarFilter)
+            self.model.filterStarItem(isStarFilter: isStarFiter, isOrder: isOrder) { item, isStarFilter  in
+             
+                self.cartItem = item
+                
+                DispatchQueue.main.async {
+                    self.output?.updateTable()
+                    self.output?.updateIsStarFilterSituation(isStarFilter: isStarFilter)
+                }
             }
         }
+        
+        
     }
     
     func didTapFilterRead(isRead: Bool) {
         
-        model.filterReadItem(isRead: isRead) { item, isRead in
+        model.getOrderSituation { isOrder in
             
-            self.cartItem = item
-            
-            DispatchQueue.main.async {
-                self.output?.updateTable()
-                self.output?.updateIsReadFilterSituation(isRead: isRead)
+            self.model.filterReadItem(isRead: isRead, isOrder: isOrder) { item, isRead in
+                
+                self.cartItem = item
+                
+                DispatchQueue.main.async {
+                    self.output?.updateTable()
+                    self.output?.updateIsReadFilterSituation(isRead: isRead)
+                }
             }
         }
     }
     
     func didTapChangeOrder(isNewOrder: Bool) {
         
-        model.changeOrderItem(isNewOrder: isNewOrder) { item, isNewOrder in
+        model.updateDatabaseOrder(isOrder: isNewOrder) {
             
-            self.cartItem = item
-            
-            DispatchQueue.main.async {
-                self.output?.updateTable()
-                self.output?.updateIsOrderSituation(isNewOrder: isNewOrder)
+            model.changeOrderItem(isNewOrder: isNewOrder) { item, isNewOrder in
+                
+                self.cartItem = item
+                
+                DispatchQueue.main.async {
+                    self.output?.updateTable()
+                    self.output?.updateIsOrderSituation(isNewOrder: isNewOrder)
+                }
             }
         }
     }
@@ -119,6 +135,13 @@ extension CartPresenter: CartPresenterInput {
             DispatchQueue.main.async {
                 self.output?.updateTable()
             }
+        }
+    }
+    
+    func didGetOrderSituation(completion: @escaping(Bool) -> ()) {
+        
+        model.getOrderSituation { result in
+            completion(result)
         }
     }
 }

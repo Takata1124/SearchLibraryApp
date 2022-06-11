@@ -54,14 +54,26 @@ class HomeModel: HomeModelInput {
             
             cartItems.enumerated().forEach { index, cartitem in
                 if let day = cartitem.createdAt?.toStringWithCurrentLocale() {
-                
                     if day.contains(month) {
                         i += 1
                     }
                     
                     if index == cartItems.count - 1 {
                         countArray.insert(i, at: monthIndex)
-                        completion(countArray, uniqueMonths)
+                        let strToNum = Dictionary(uniqueKeysWithValues: zip(uniqueMonths, countArray))
+                        let sortData = strToNum.sorted { $0.0 > $1.0 } .map { $0 }
+                        
+                        var temporaryCounts: [Int] = []
+                        var temporaryUniqueMonths: [String] = []
+                        
+                        sortData.forEach { data in
+                            temporaryCounts.append(data.value)
+                            temporaryUniqueMonths.append(data.key)
+                            
+                            if sortData.count == temporaryCounts.count {
+                                completion(temporaryCounts, temporaryUniqueMonths)
+                            }
+                        }
                     }
                 }
             }
@@ -79,7 +91,6 @@ class HomeModel: HomeModelInput {
         AF.request(url).responseDecodable(of: [LocationData].self, decoder: JSONDecoder()) { response in
             
             if case .success(let data) = response.result {
-                
                 data.forEach { singleData in
                     i += 1
                     

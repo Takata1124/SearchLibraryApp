@@ -17,8 +17,8 @@ class IsbnRouter {
     
     private var viewController: UIViewController!
     
-    init(vc: UIViewController) {
-        self.viewController = vc
+    init(viewController: UIViewController) {
+        self.viewController = viewController
     }
 }
 

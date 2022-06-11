@@ -182,8 +182,11 @@ class SelectBookViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func goBackView(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func goBackHomeView(_ sender: Any) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
 }
 
 extension SelectBookViewController: SelectBookPresenterOutput {
-    
 }

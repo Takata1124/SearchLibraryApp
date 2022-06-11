@@ -24,7 +24,7 @@ class TableViewCell: UITableViewCell {
                 self.doneReadLabel.textColor = .red
             } else {
                 self.doneReadLabel.text = "読書中"
-                self.doneReadLabel.textColor = .black
+                self.doneReadLabel.textColor = .modeTextColor
             }
         }
     }

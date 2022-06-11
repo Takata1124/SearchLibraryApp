@@ -12,6 +12,8 @@ target 'SearchLibraryApp' do
   pod 'PKHUD', '~> 5.0'
   pod 'Charts'
   pod 'SnapKit', '~> 5.6.0'
+  pod 'SQLite.swift', '~> 0.13.3'
+  pod 'Google-Mobile-Ads-SDK'
 
   target 'SearchLibraryAppTests' do
     inherit! :search_paths

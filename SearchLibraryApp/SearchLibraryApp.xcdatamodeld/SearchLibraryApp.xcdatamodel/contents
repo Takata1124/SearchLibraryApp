@@ -11,9 +11,11 @@
         <attribute name="star" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
+    <entity name="Setting" representedClassName="Setting" syncable="YES" codeGenerationType="class">
+        <attribute name="isOrder" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
     <elements>
         <element name="CartItem" positionX="-63" positionY="-18" width="128" height="164"/>
-        <element name="Entity" positionX="-54" positionY="9" width="128" height="29"/>
+        <element name="Setting" positionX="-54" positionY="9" width="128" height="44"/>
     </elements>
 </model>

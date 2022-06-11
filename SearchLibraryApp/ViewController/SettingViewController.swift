@@ -19,6 +19,7 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
                               "プライバシーポリシー",
                               "ダークモード",
                               "位置情報設定",
+                              "データの表示順",
                               "データの削除"]
     
     var selectCell: String = ""
@@ -49,17 +50,14 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @objc func dismissSetup(_ sender: UIButton){
-        
         self.dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return settings.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 50
     }
     
@@ -73,13 +71,11 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
         let selectCell = settings[indexPath.row]
         goSelectView(selectCell: selectCell)
     }
     
     @IBAction func goBackView(_ sender: Any) {
-        
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -104,8 +100,9 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
                 alert.dismiss(animated: false, completion: nil)
             })
             
-            alert.addAction(addActionAlert)
+            alert.view.tintColor = UIColor.modeTextColor
             
+            alert.addAction(addActionAlert)
             present(alert, animated: true)
             
         case "データの削除":
@@ -121,9 +118,10 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
                 alert.dismiss(animated: false, completion: nil)
             })
             
+            alert.view.tintColor = UIColor.modeTextColor
+            
             alert.addAction(addOkAlert)
             alert.addAction(addNgAlert)
-            
             present(alert, animated: true)
             
         case "位置情報設定":
@@ -160,6 +158,8 @@ extension SettingViewController: CLLocationManagerDelegate {
                 
                 alert.dismiss(animated: false, completion: nil)
             })
+            
+            alert.view.tintColor = UIColor.modeTextColor
 
             alert.addAction(addOkAlert)
             alert.addAction(addNgAlert)
@@ -173,6 +173,8 @@ extension SettingViewController: CLLocationManagerDelegate {
                 
                 alert.dismiss(animated: false, completion: nil)
             })
+            
+            alert.view.tintColor = UIColor.modeTextColor
             
             alert.addAction(addOkAlert)
             

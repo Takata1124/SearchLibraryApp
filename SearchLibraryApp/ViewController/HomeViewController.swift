@@ -10,13 +10,14 @@ import CoreLocation
 import Alamofire
 import Charts
 import CoreData
+import GoogleMobileAds
 
 class HomeViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     var locationManager: CLLocationManager!
     
+    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var totalReadLabel: UILabel!
     @IBOutlet weak var monthReadLabel: UILabel!
     @IBOutlet weak var barChart: BarChartView!
@@ -25,14 +26,25 @@ class HomeViewController: UIViewController {
     
     private var presenter: HomePresenterInput!
     
+    var database = Database()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "ホーム"
-
         self.presenter = HomePresenter(output: self, model: HomeModel())
-    
         setupLocationManager()
+        
+        let result = database.findById(id: 1)
+        if result == [] {
+            try? database.insert(isNewOrder: false)
+        }
+        
+//        bannerView.adUnitID = "ca-app-pub-9090762928060133/1498141625"
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/6300978111"
+        bannerView.rootViewController = self
+        
+        bannerView.load(GADRequest())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +59,6 @@ class HomeViewController: UIViewController {
         let dataSet = BarChartDataSet(entries: entries)
         let data = BarChartData(dataSet: dataSet)
         barChart.data = data
-        
         //ラベルに表示するデータを指定　上で作成した「labels」を指定
         barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:labels)
         barChart.xAxis.granularity = 1
@@ -80,7 +91,6 @@ class HomeViewController: UIViewController {
         barChart.legend.enabled = false
         //色の指定　数値の表示非表示
         dataSet.drawValuesEnabled = false
-        //dataSet.colors = [.gray]
         dataSet.colors = [UIColor.systemGreen, .systemPink, UIColor.systemGreen, UIColor.systemGreen, UIColor.systemGreen, UIColor.systemGreen, UIColor.systemGreen ]
         //その他設定
         barChart.dragDecelerationEnabled = true //指を離してもスクロール続くか
@@ -92,7 +102,6 @@ class HomeViewController: UIViewController {
     }
     
     private func setupLocationManager() {
-        
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -111,7 +120,6 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func goCartView(_ sender: Any) {
-        
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "goCart", sender: nil)
         }
@@ -163,10 +171,11 @@ extension HomeViewController: HomePresenterOutput {
             days.forEach { day in
                 
                 let dayString = day.toStringWithCurrentLocale()
-                
                 if dayString.contains(week) {
                     count += 1
                     self.monthReadLabel.text = String(count)
+                } else {
+                    self.monthReadLabel.text = "0"
                 }
             }
         }
