@@ -1129,10 +1129,10 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YnU-8M-2qr" customClass="GADBannerView">
-                                <rect key="frame" x="0.0" y="696" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="721" width="414" height="75"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="r5D-OH-XLL"/>
+                                    <constraint firstAttribute="height" constant="75" id="r5D-OH-XLL"/>
                                 </constraints>
                             </view>
                         </subviews>
