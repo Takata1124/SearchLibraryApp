@@ -10,7 +10,7 @@ import Foundation
 protocol HomePresenterInput: AnyObject {
     
     func didSearchLocationLibrary(latitude: Double, logitude: Double)
-    func didFetchAllItem()
+    func didFetchAllItem(completion: @escaping() -> Void)
     func didDistributeItem()
 }
 
@@ -24,7 +24,6 @@ class HomePresenter {
     
     private weak var output: HomePresenterOutput?
     private var model: HomeModelInput
-    
     var cartItems: [CartItem] = []
     
     init(output: HomePresenterOutput, model: HomeModelInput) {
@@ -35,25 +34,26 @@ class HomePresenter {
 
 extension HomePresenter: HomePresenterInput {
     
-    func didFetchAllItem() {
-        
+    func didFetchAllItem(completion: @escaping() -> Void) {
         model.fetchAllItem { days, items  in
             if days != [] {
                 self.output?.updateTotalLabels(days: days)
                 self.cartItems = items
+                completion()
+            } else {
+                self.cartItems = []
+                completion()
             }
         }
     }
 
-    func didSearchLocationLibrary(latitude: Double, logitude: Double) {
-        
-        model.searchLocationLibrary(latitude: latitude, longitude: logitude)
-    }
-    
     func didDistributeItem() {
-        
         model.distributeItem(cartItems: self.cartItems) { counts, chartLabels in
             self.output?.makingChart(counts: counts, labels: chartLabels)
         }
+    }
+    
+    func didSearchLocationLibrary(latitude: Double, logitude: Double) {
+        model.searchLocationLibrary(latitude: latitude, longitude: logitude)
     }
 }

@@ -47,6 +47,11 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.7.0)"
   - GoogleUtilities/Reachability (7.7.0):
     - GoogleUtilities/Logger
+  - InputBarAccessoryView (5.5.0):
+    - InputBarAccessoryView/Core (= 5.5.0)
+  - InputBarAccessoryView/Core (5.5.0)
+  - MessageKit (3.8.0):
+    - InputBarAccessoryView (~> 5.5.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -66,6 +71,7 @@ DEPENDENCIES:
   - AlamofireImage
   - Charts
   - Google-Mobile-Ads-SDK
+  - MessageKit
   - PKHUD (~> 5.0)
   - SnapKit (~> 5.6.0)
   - SQLite.swift (~> 0.13.3)
@@ -80,6 +86,8 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - InputBarAccessoryView
+    - MessageKit
     - nanopb
     - PKHUD
     - PromisesObjC
@@ -96,6 +104,8 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 8ecc717f2abe3f9ee95a5d38db08827852894acc
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  InputBarAccessoryView: 1d7b0a672b36e370f01f264b3907ef39d03328e3
+  MessageKit: a1ba0c69ebead94029867853eb44dd05b9b3f453
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
@@ -104,6 +114,6 @@ SPEC CHECKSUMS:
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 9cffc167909619179925afe0a973706f35d9dfc1
+PODFILE CHECKSUM: 0e6337066a032c882fff7479eb3e27356be21834
 
 COCOAPODS: 1.11.2

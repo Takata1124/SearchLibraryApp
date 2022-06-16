@@ -38,7 +38,6 @@ class CartPresenter {
     init(output: CartPresenterOutput, model: CartModelInput) {
         self.output = output
         self.model = model
-        self.cartItem = model.fetchAllItem(isOrder: false)
     }
 }
 
@@ -65,7 +64,6 @@ extension CartPresenter: CartPresenterInput {
     func didTapSelectRemoveItem(index: Int) {
         
         model.deleteSelectedItem(item: cartItem[index]) { success in
-            
             if success {
                 self.model.getOrderSituation { isOrder in
                     self.cartItem = self.model.fetchAllItem(isOrder: isOrder)
@@ -80,11 +78,9 @@ extension CartPresenter: CartPresenterInput {
     func didTapFilterStar(isStarFiter: Bool) {
         
         model.getOrderSituation { isOrder in
-            
             self.model.filterStarItem(isStarFilter: isStarFiter, isOrder: isOrder) { item, isStarFilter  in
              
                 self.cartItem = item
-                
                 DispatchQueue.main.async {
                     self.output?.updateTable()
                     self.output?.updateIsStarFilterSituation(isStarFilter: isStarFilter)

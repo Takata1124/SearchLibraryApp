@@ -8,23 +8,25 @@
 import UIKit
 import SnapKit
 import CoreLocation
+import CoreData
 
 class SettingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let settingTableView = SettingTableView()
     
-    let settings: [String] = ["アプリバージョン",
+    let settings: [String] = ["ユーザー情報",
+                              "アプリバージョン",
                               "取扱説明",
-                              "ライセンス",
                               "プライバシーポリシー",
+                              "お問い合わせ",
                               "ダークモード",
                               "位置情報設定",
                               "データの表示順",
                               "データの削除"]
     
     var selectCell: String = ""
-    
     var locationManager: CLLocationManager!
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,10 +112,16 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
             let alert = UIAlertController(title: "データの削除", message: "データの削除を実施しますか？", preferredStyle: .alert)
             let addOkAlert: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
                 
-                alert.dismiss(animated: false, completion: nil)
+                self.deleteCoredataItems { isDelete in
+                    alert.dismiss(animated: false, completion: nil)
+                    
+                    if !isDelete {
+                        print("CoreDataが削除できませんでした")
+                    }
+                }
             })
             
-            let addNgAlert: UIAlertAction = UIAlertAction(title: "NG", style: .default, handler: { _ in
+            let addNgAlert: UIAlertAction = UIAlertAction(title: "NO", style: .default, handler: { _ in
                 
                 alert.dismiss(animated: false, completion: nil)
             })
@@ -135,6 +143,24 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
             
             performSegue(withIdentifier: "goSettingDetail", sender: nil)
         }
+    }
+    
+    func deleteCoredataItems(completion: @escaping(Bool) -> ()) {
+        
+        let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
+        let cartItem = try? context.fetch(fetchRequest)
+        
+        cartItem?.forEach({ item in
+            context.delete(item)
+            
+            do {
+                try context.save()
+                completion(true)
+            } catch {
+                print("CoreDataに保存できませんでした")
+                completion(false)
+            }
+        })
     }
 }
 

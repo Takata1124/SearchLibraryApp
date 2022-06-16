@@ -22,7 +22,6 @@ class IsbnModel: IsbnModelInput {
     
     let notificationCenter = NotificationCenter()
     static let notificationName = "IsbnModel"
-    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func createItem(title: String, author: String, imageUrl: String, isbn: String, pubDate: String, detailText: String) {
@@ -68,13 +67,11 @@ class IsbnModel: IsbnModelInput {
             }
 
             try context.save()
-            
             return reverseread
 
         } catch let error as NSError {
 
             print("\(error), \(error.userInfo)")
-            
             return false
         }
     }
@@ -82,7 +79,6 @@ class IsbnModel: IsbnModelInput {
     func reverseStar(titleText: String) -> Bool {
         
         let fetchRequest = NSFetchRequest<CartItem>(entityName:"CartItem")
-
         fetchRequest.predicate = NSPredicate(format: "title = %@", titleText)
         
         var reversestar: Bool = false
@@ -101,13 +97,11 @@ class IsbnModel: IsbnModelInput {
             }
             
             try context.save()
-            
             return reversestar
 
         } catch let error as NSError {
             
             print("\(error), \(error.userInfo)")
-            
             return false
         }
     }
@@ -115,7 +109,6 @@ class IsbnModel: IsbnModelInput {
     func getSearchBookData(isbn: String, completion: @escaping([Item]) -> Void) {
         
         let url: String = "https://api.openbd.jp/v1/get?isbn=\(isbn)"
-        
         var item: [Item] = []
         
         AF.request(url).responseDecodable(of: [IsbnData].self, decoder: JSONDecoder()) { response in

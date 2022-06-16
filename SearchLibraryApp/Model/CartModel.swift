@@ -24,13 +24,11 @@ protocol CartModelInput {
 class CartModel: CartModelInput {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     let database = Database()
     
     func fetchAllItem(isOrder: Bool) -> [CartItem] {
         
         let fetchRequest = NSFetchRequest<CartItem>(entityName: "CartItem")
-        
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: isOrder)]
         
         do {
@@ -45,6 +43,7 @@ class CartModel: CartModelInput {
     func deleteSelectedItem(item: CartItem, completion: @escaping(Bool) -> ()) {
         
         context.delete(item)
+        
         do {
             try context.save()
             completion(true)
@@ -134,8 +133,6 @@ class CartModel: CartModelInput {
     }
     
     func updateDatabaseOrder(isOrder: Bool, completion: () -> Void) {
-        
-        print(isOrder)
         
         let database = Database()
         database.update(rowId: 1, isNewOrder: isOrder)

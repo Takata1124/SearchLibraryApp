@@ -23,13 +23,18 @@ class HomeModel: HomeModelInput {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     func fetchAllItem(completion: @escaping([Date], [CartItem]) -> Void) {
+        
         do {
             let cartItems = try context.fetch(CartItem.fetchRequest())
             
-            var createdDays: [Date] = []
-            cartItems.forEach { cartitem in
-                createdDays.append(cartitem.createdAt!)
-                completion(createdDays, cartItems)
+            if cartItems == [] {
+                completion([], [])
+            } else {
+                var createdDays: [Date] = []
+                cartItems.forEach { cartitem in
+                    createdDays.append(cartitem.createdAt!)
+                    completion(createdDays, cartItems)
+                }
             }
         } catch {
             completion([], [])

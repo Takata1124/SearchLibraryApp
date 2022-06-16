@@ -19,7 +19,17 @@ class SettingDetailView: UIView {
     
     var modeSwitch = BaseSwitch()
     var modeLabel = BaseLabel(frame: CGRect(x: UIScreen.main.bounds.width / 2 - 50, y: 300, width: 100, height: 50))
-    var backButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width / 2 - 50, y: UIScreen.main.bounds.height - 150, width: 100, height: 100))
+    var mailButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: UIScreen.main.bounds.width / 2 - 75, y: UIScreen.main.bounds.height / 2, width: 150, height: 50)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = UIColor.systemTeal
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.0
+        button.layer.cornerRadius = 10
+        button.setTitle("お問い合わせ", for:UIControl.State.normal)
+        return button
+    }()
     
     var modeSelect: Bool = false {
         didSet {
@@ -46,8 +56,7 @@ class SettingDetailView: UIView {
     }
     
     var orderSwitch = BaseSwitch()
-    
-    
+
     var selectCell: String = ""  {
         didSet {
             selectCategorySetting(selectCell: selectCell)
@@ -85,14 +94,14 @@ class SettingDetailView: UIView {
         case "取扱説明":
             setupWebView(url: "https://mo-gu-mo-gu.com/ios-wkwebview-tutorial/")
             
-        case "ライセンス":
-            setupWebView(url: "https://mo-gu-mo-gu.com/ios-wkwebview-tutorial/")
-            
         case "プライバシーポリシー":
             setupWebView(url: "https://takata1124.github.io/SearchLibraryApp/PrivacyPolicy/privacy.html")
             
         case "データの表示順":
             orderSetupLayout()
+            
+        case "お問い合わせ":
+            setupMailLayout()
             
         default:
             print("default")
@@ -115,6 +124,12 @@ class SettingDetailView: UIView {
         
         self.addSubview(modeLabel)
         self.addSubview(orderSwitch)
+    }
+    
+    private func setupMailLayout() {
+ 
+        
+        self.addSubview(mailButton)
     }
     
     private func setupLocationManager() {

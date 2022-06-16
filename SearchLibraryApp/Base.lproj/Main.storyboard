@@ -862,6 +862,107 @@
             </objects>
             <point key="canvasLocation" x="4032" y="933"/>
         </scene>
+        <!--Chat Room View Controller-->
+        <scene sceneID="GQ9-Ul-Zhm">
+            <objects>
+                <viewController id="eAR-54-E3o" customClass="ChatRoomViewController" customModule="SearchLibraryApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9om-it-pfc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="m4d-vM-nYg">
+                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXH-8C-4gN">
+                                        <rect key="frame" x="0.0" y="0.0" width="207" height="100"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrowshape.turn.up.left" catalog="system">
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="goBackView:" destination="eAR-54-E3o" eventType="touchUpInside" id="von-x7-Tsr"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tyc-rS-9GJ">
+                                        <rect key="frame" x="207" y="0.0" width="207" height="100"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="square.and.pencil" catalog="system"/>
+                                        <connections>
+                                            <action selector="goChat:" destination="eAR-54-E3o" eventType="touchUpInside" id="g3V-2C-iNX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemTealColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="OrU-jW-rkU"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="dpP-bK-xQu"/>
+                                </constraints>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9VC-Ti-B8q">
+                                <rect key="frame" x="0.0" y="199" width="414" height="597"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kPa-za-hib">
+                                <rect key="frame" x="30" y="154" width="354" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="XJD-A4-Cyz"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="新着"/>
+                                    <segment title="人気"/>
+                                    <segment title="マイルーム"/>
+                                </segments>
+                            </segmentedControl>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="SLk-tB-b8Q">
+                                <rect key="frame" x="0.0" y="88" width="414" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ScJ-ax-7Sh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9VC-Ti-B8q" firstAttribute="leading" secondItem="ScJ-ax-7Sh" secondAttribute="leading" id="3Qr-IK-hXf"/>
+                            <constraint firstAttribute="bottom" secondItem="m4d-vM-nYg" secondAttribute="bottom" id="L4G-p7-uXt"/>
+                            <constraint firstItem="SLk-tB-b8Q" firstAttribute="top" secondItem="ScJ-ax-7Sh" secondAttribute="top" id="LNb-AN-VzI"/>
+                            <constraint firstItem="kPa-za-hib" firstAttribute="top" secondItem="SLk-tB-b8Q" secondAttribute="bottom" constant="15" id="Mdc-IM-dwa"/>
+                            <constraint firstItem="ScJ-ax-7Sh" firstAttribute="trailing" secondItem="kPa-za-hib" secondAttribute="trailing" constant="30" id="NJY-LJ-DOj"/>
+                            <constraint firstItem="kPa-za-hib" firstAttribute="leading" secondItem="ScJ-ax-7Sh" secondAttribute="leading" constant="30" id="Oj2-n2-TzG"/>
+                            <constraint firstItem="SLk-tB-b8Q" firstAttribute="leading" secondItem="ScJ-ax-7Sh" secondAttribute="leading" id="SXl-i4-Gr2"/>
+                            <constraint firstItem="m4d-vM-nYg" firstAttribute="leading" secondItem="ScJ-ax-7Sh" secondAttribute="leading" id="ajH-u5-ZmS"/>
+                            <constraint firstItem="m4d-vM-nYg" firstAttribute="top" secondItem="9VC-Ti-B8q" secondAttribute="bottom" id="m6G-ca-QB4"/>
+                            <constraint firstItem="9VC-Ti-B8q" firstAttribute="top" secondItem="kPa-za-hib" secondAttribute="bottom" constant="15" id="mfu-pX-R0W"/>
+                            <constraint firstItem="SLk-tB-b8Q" firstAttribute="trailing" secondItem="ScJ-ax-7Sh" secondAttribute="trailing" id="nTT-nD-9S5"/>
+                            <constraint firstItem="ScJ-ax-7Sh" firstAttribute="trailing" secondItem="9VC-Ti-B8q" secondAttribute="trailing" id="xmv-b6-PdJ"/>
+                            <constraint firstItem="ScJ-ax-7Sh" firstAttribute="trailing" secondItem="m4d-vM-nYg" secondAttribute="trailing" id="ztf-EV-929"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="F4g-pc-1j9"/>
+                    <connections>
+                        <outlet property="chatRoomTableView" destination="9VC-Ti-B8q" id="efq-x4-PrY"/>
+                        <segue destination="7Zv-Wb-nLD" kind="show" identifier="goChat" id="sGE-UI-EAZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZcC-zC-7eZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2279.7101449275365" y="-1424.3303571428571"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="P5E-qK-zCr">
+            <objects>
+                <viewController id="7Zv-Wb-nLD" customClass="ChatViewController" customModule="SearchLibraryApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Rx-Jz-y9a">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="bjC-Gu-Not"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="AKa-gG-nIV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oDz-ex-cme" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3128.985507246377" y="-1424.3303571428571"/>
+        </scene>
         <!--Setting View Controller-->
         <scene sceneID="Vc7-do-5H2">
             <objects>
@@ -960,24 +1061,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JEJ-2n-B06">
-                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="696" width="414" height="100"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y9L-1W-Odi">
-                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="100"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ff7-54-vXi">
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="100"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="plb-M5-1CA">
-                                                <rect key="frame" x="0.0" y="0.0" width="103.5" height="59.5"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x4L-ap-Ieu">
+                                                <rect key="frame" x="0.0" y="0.0" width="83" height="59.5"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="building" catalog="system">
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="goLibraryView:" destination="S04-5u-LiD" eventType="touchUpInside" id="4L9-rW-iY5"/>
+                                                    <action selector="goLibraryView:" destination="S04-5u-LiD" eventType="touchUpInside" id="2L8-HS-6xn"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="図書館" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gw0-Pt-B6P">
-                                                <rect key="frame" x="0.0" y="40.5" width="103.5" height="59.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="図書館" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D79-s6-VTN">
+                                                <rect key="frame" x="0.0" y="40.5" width="83" height="59.5"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -987,10 +1088,10 @@
                                         <color key="tintColor" systemColor="labelColor"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WrH-Nk-gya">
-                                        <rect key="frame" x="103.5" y="0.0" width="103.5" height="100"/>
+                                        <rect key="frame" x="83" y="0.0" width="82.5" height="100"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9t-eu-949">
-                                                <rect key="frame" x="0.0" y="0.0" width="103.5" height="59.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="82.5" height="59.5"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="magnifyingglass" catalog="system">
@@ -1001,7 +1102,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="探す" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddV-Po-g6Q">
-                                                <rect key="frame" x="0.0" y="40.5" width="103.5" height="59.5"/>
+                                                <rect key="frame" x="0.0" y="40.5" width="82.5" height="59.5"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1011,10 +1112,10 @@
                                         <color key="tintColor" systemColor="labelColor"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kb4-dR-uVd">
-                                        <rect key="frame" x="207" y="0.0" width="103.5" height="100"/>
+                                        <rect key="frame" x="165.5" y="0.0" width="83" height="100"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MjR-92-owX">
-                                                <rect key="frame" x="0.0" y="0.0" width="103.5" height="59.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="83" height="59.5"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="book.closed" catalog="system">
@@ -1025,7 +1126,31 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="記録" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Is-2C-QP2">
-                                                <rect key="frame" x="0.0" y="40.5" width="103.5" height="59.5"/>
+                                                <rect key="frame" x="0.0" y="40.5" width="83" height="59.5"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y9L-1W-Odi">
+                                        <rect key="frame" x="248.5" y="0.0" width="82.5" height="100"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="plb-M5-1CA">
+                                                <rect key="frame" x="0.0" y="0.0" width="82.5" height="59.5"/>
+                                                <color key="tintColor" systemColor="labelColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="text.bubble" catalog="system">
+                                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="goChatView:" destination="S04-5u-LiD" eventType="touchUpInside" id="2ko-cw-pdX"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="チャット" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gw0-Pt-B6P">
+                                                <rect key="frame" x="0.0" y="40.5" width="82.5" height="59.5"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1035,10 +1160,10 @@
                                         <color key="tintColor" systemColor="labelColor"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5YN-N9-5Hh">
-                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="100"/>
+                                        <rect key="frame" x="331" y="0.0" width="83" height="100"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Crm-0j-Uwa">
-                                                <rect key="frame" x="0.0" y="0.0" width="103.5" height="59.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="83" height="59.5"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="gearshape" catalog="system">
@@ -1049,7 +1174,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設定" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsb-2F-7Do">
-                                                <rect key="frame" x="0.0" y="40.5" width="103.5" height="59.5"/>
+                                                <rect key="frame" x="0.0" y="40.5" width="83" height="59.5"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1129,10 +1254,10 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YnU-8M-2qr" customClass="GADBannerView">
-                                <rect key="frame" x="0.0" y="721" width="414" height="75"/>
+                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="75" id="r5D-OH-XLL"/>
+                                    <constraint firstAttribute="height" constant="100" id="r5D-OH-XLL"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1142,12 +1267,12 @@
                             <constraint firstItem="YhB-GL-Xn8" firstAttribute="trailing" secondItem="YnU-8M-2qr" secondAttribute="trailing" id="8Ei-go-Kzb"/>
                             <constraint firstItem="UJ6-Ie-ZaY" firstAttribute="top" secondItem="YhB-GL-Xn8" secondAttribute="top" constant="75" id="OBw-4q-N86"/>
                             <constraint firstItem="YnU-8M-2qr" firstAttribute="leading" secondItem="YhB-GL-Xn8" secondAttribute="leading" id="QVA-qF-auw"/>
-                            <constraint firstItem="JEJ-2n-B06" firstAttribute="top" secondItem="YnU-8M-2qr" secondAttribute="bottom" id="V43-sp-0Ar"/>
                             <constraint firstItem="s4y-hG-4k0" firstAttribute="centerX" secondItem="M0R-HJ-Zl9" secondAttribute="centerX" id="bsZ-PK-w8u"/>
                             <constraint firstItem="YhB-GL-Xn8" firstAttribute="trailing" secondItem="JEJ-2n-B06" secondAttribute="trailing" id="d5s-Lq-nkm"/>
                             <constraint firstItem="JEJ-2n-B06" firstAttribute="leading" secondItem="YhB-GL-Xn8" secondAttribute="leading" id="ka4-FR-HaW"/>
-                            <constraint firstAttribute="bottom" secondItem="JEJ-2n-B06" secondAttribute="bottom" id="mE7-Rt-w8n"/>
+                            <constraint firstItem="YnU-8M-2qr" firstAttribute="top" secondItem="JEJ-2n-B06" secondAttribute="bottom" id="mLm-ec-ccl"/>
                             <constraint firstItem="UJ6-Ie-ZaY" firstAttribute="centerX" secondItem="M0R-HJ-Zl9" secondAttribute="centerX" id="mfo-ea-fBy"/>
+                            <constraint firstAttribute="bottom" secondItem="YnU-8M-2qr" secondAttribute="bottom" id="uyh-XZ-RAV"/>
                             <constraint firstItem="s4y-hG-4k0" firstAttribute="top" secondItem="UJ6-Ie-ZaY" secondAttribute="bottom" constant="50" id="zgG-bK-UOH"/>
                         </constraints>
                     </view>
@@ -1162,6 +1287,7 @@
                         <segue destination="ABL-vg-VkV" kind="show" identifier="goLibrary" id="4IR-kB-Rl2"/>
                         <segue destination="b9V-ob-Go6" kind="show" identifier="goCart" id="lox-f0-HWC"/>
                         <segue destination="6ut-bf-g0W" kind="show" identifier="goSetting" id="bLo-7H-p26"/>
+                        <segue destination="eAR-54-E3o" kind="show" identifier="goChatRoom" id="A4t-2M-dm1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZrN-ot-cf4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1265,9 +1391,23 @@
             </objects>
             <point key="canvasLocation" x="1474" y="110"/>
         </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="MI5-HB-25J">
+            <objects>
+                <viewController id="GU4-38-dHL" customClass="ChatViewController" customModule="SearchLibraryApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qag-9G-eMs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uym-N7-r52" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3991" y="-1424"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Il8-My-sUC"/>
+        <segue reference="yCj-Ec-kwN"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
@@ -1281,7 +1421,9 @@
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <image name="text.bubble" catalog="system" width="128" height="110"/>
         <namedColor name="modeTextColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

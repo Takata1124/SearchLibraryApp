@@ -23,9 +23,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var barChart: BarChartView!
     
     var chartDataSet: LineChartDataSet!
-    
     private var presenter: HomePresenterInput!
-    
     var database = Database()
     
     override func viewDidLoad() {
@@ -43,14 +41,14 @@ class HomeViewController: UIViewController {
 //        bannerView.adUnitID = "ca-app-pub-9090762928060133/1498141625"
         bannerView.adUnitID = "ca-app-pub-3940256099942544/6300978111"
         bannerView.rootViewController = self
-        
         bannerView.load(GADRequest())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        presenter.didFetchAllItem()
-        presenter.didDistributeItem()
+        presenter.didFetchAllItem {
+            self.presenter.didDistributeItem()
+        }
     }
     
     private func getChart(labels: [String], rawData: [Int]){
@@ -124,6 +122,10 @@ class HomeViewController: UIViewController {
             self.performSegue(withIdentifier: "goCart", sender: nil)
         }
     }
+    
+    @IBAction func goChatView(_ sender: Any) {
+        performSegue(withIdentifier: "goChatRoom", sender: nil)
+    }
 }
 
 extension HomeViewController: CLLocationManagerDelegate {
@@ -152,7 +154,6 @@ extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let locValue: CLLocationCoordinate2D = manager.location?.coordinate {
-            
             presenter.didSearchLocationLibrary(latitude: locValue.latitude, logitude: locValue.longitude)
         }
     }
@@ -167,9 +168,7 @@ extension HomeViewController: HomePresenterOutput {
             
             let week = Date().toStringWithCurrentLocale().prefix(7)
             var count: Int = 0
-            
             days.forEach { day in
-                
                 let dayString = day.toStringWithCurrentLocale()
                 if dayString.contains(week) {
                     count += 1
