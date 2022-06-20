@@ -31,6 +31,7 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "設定"
         self.navigationItem.hidesBackButton = true
         
         let baseStackView = UIStackView(arrangedSubviews: [settingTableView])

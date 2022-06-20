@@ -8,7 +8,10 @@
 import UIKit
 import CoreLocation
 import CoreData
+import Firebase
 import GoogleMobileAds
+//import FirebaseCore
+//import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        FirebaseApp.configure()
+//        IQKeyboardManager.shared.enable = true
         
         return true
     }

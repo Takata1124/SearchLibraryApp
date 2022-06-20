@@ -136,7 +136,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.searchBar.endEditing(true)
         
         if searchBar.text != "" {
-            
             presenter.didTapSearchButton(searchText: searchBar.text!)
         }
     }

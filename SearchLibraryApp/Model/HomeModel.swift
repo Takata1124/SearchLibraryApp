@@ -74,7 +74,6 @@ class HomeModel: HomeModelInput {
                         sortData.forEach { data in
                             temporaryCounts.append(data.value)
                             temporaryUniqueMonths.append(data.key)
-                            
                             if sortData.count == temporaryCounts.count {
                                 completion(temporaryCounts, temporaryUniqueMonths)
                             }

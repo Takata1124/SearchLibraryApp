@@ -15,6 +15,10 @@ target 'SearchLibraryApp' do
   pod 'SQLite.swift', '~> 0.13.3'
   pod 'Google-Mobile-Ads-SDK'
   pod 'MessageKit'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
 
   target 'SearchLibraryAppTests' do
     inherit! :search_paths

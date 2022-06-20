@@ -62,6 +62,10 @@
 		68F886E92854D5470026E3A6 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F886E82854D5470026E3A6 /* Order.swift */; };
 		68F886EB285789230026E3A6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F886EA285789230026E3A6 /* ChatViewController.swift */; };
 		68F886ED285B8E880026E3A6 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F886EC285B8E880026E3A6 /* ChatRoomViewController.swift */; };
+		68F886F1285E06630026E3A6 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F886F0285E06630026E3A6 /* Type.swift */; };
+		68F886F3285EC9110026E3A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68F886F2285EC9110026E3A6 /* GoogleService-Info.plist */; };
+		68F886F5285EE56F0026E3A6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F886F4285EE56F0026E3A6 /* LoginViewController.swift */; };
+		68F886F7285F58650026E3A6 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F886F6285F58650026E3A6 /* SignUpViewController.swift */; };
 		E3A961AF2651BED781813D27 /* Pods_SearchLibraryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0565720ED267F318FB410A1 /* Pods_SearchLibraryApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -143,6 +147,10 @@
 		68F886E82854D5470026E3A6 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		68F886EA285789230026E3A6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		68F886EC285B8E880026E3A6 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
+		68F886F0285E06630026E3A6 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
+		68F886F2285EC9110026E3A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		68F886F4285EE56F0026E3A6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		68F886F6285F58650026E3A6 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		8577D4AA9B380B32548B4261 /* Pods-SearchLibraryApp-SearchLibraryAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchLibraryApp-SearchLibraryAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-SearchLibraryApp-SearchLibraryAppUITests/Pods-SearchLibraryApp-SearchLibraryAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B0565720ED267F318FB410A1 /* Pods_SearchLibraryApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SearchLibraryApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7118CF48219F71EEEB839F0 /* Pods-SearchLibraryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchLibraryApp.release.xcconfig"; path = "Target Support Files/Pods-SearchLibraryApp/Pods-SearchLibraryApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -250,6 +258,7 @@
 				68D1C3662816F6420046D298 /* Assets.xcassets */,
 				68D1C3682816F6420046D298 /* LaunchScreen.storyboard */,
 				68D1C36B2816F6420046D298 /* Info.plist */,
+				68F886F2285EC9110026E3A6 /* GoogleService-Info.plist */,
 				68D1C3632816F6400046D298 /* SearchLibraryApp.xcdatamodeld */,
 				68D1C3A9281AEA4C0046D298 /* ApiKey.swift */,
 				68890498284B9F3900B1531F /* Database.swift */,
@@ -277,6 +286,7 @@
 		68D1C39B2819704B0046D298 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				68F886F0285E06630026E3A6 /* Type.swift */,
 				68D1C38F2817AFA70046D298 /* IsbnData.swift */,
 				68D1C3972818ED0E0046D298 /* LocationData.swift */,
 				68D1C39E281A336E0046D298 /* BookData.swift */,
@@ -307,6 +317,8 @@
 		68D1C3BE28204CAD0046D298 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				68F886F4285EE56F0026E3A6 /* LoginViewController.swift */,
+				68F886F6285F58650026E3A6 /* SignUpViewController.swift */,
 				68D1C3912817E86C0046D298 /* HomeViewController.swift */,
 				68D1C393281805660046D298 /* SearchViewController.swift */,
 				68D1C35E2816F6400046D298 /* IsbnViewController.swift */,
@@ -486,6 +498,7 @@
 				68D1C3672816F6420046D298 /* Assets.xcassets in Resources */,
 				68D1C3622816F6400046D298 /* Main.storyboard in Resources */,
 				68D1C3B6281DA4620046D298 /* BookTableViewCell.xib in Resources */,
+				68F886F3285EC9110026E3A6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +626,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68F886F7285F58650026E3A6 /* SignUpViewController.swift in Sources */,
 				68D1C396281852560046D298 /* LibrarySpotViewController.swift in Sources */,
 				68D1C3BA281EF5F20046D298 /* WebViewController.swift in Sources */,
 				68D1C35F2816F6400046D298 /* IsbnViewController.swift in Sources */,
@@ -639,6 +653,7 @@
 				6889049B284E585100B1531F /* SettingPresenter.swift in Sources */,
 				68D1C38E2817A4EE0046D298 /* HomeModel.swift in Sources */,
 				68D1C3AA281AEA4C0046D298 /* ApiKey.swift in Sources */,
+				68F886F5285EE56F0026E3A6 /* LoginViewController.swift in Sources */,
 				68D1C3B0281C7B460046D298 /* SearchBookViewController.swift in Sources */,
 				6821D0A82843B08700ADE0D0 /* IsbnRouter.swift in Sources */,
 				68EBD324283479E600CC53D5 /* IsbnPresenter.swift in Sources */,
@@ -648,6 +663,7 @@
 				68BE4F87283A4F8F0072CAC8 /* BaseLabel.swift in Sources */,
 				689E6B57282FC50300F1114A /* CartPresenter.swift in Sources */,
 				68F4C5C42824609000A68865 /* IsbnModel.swift in Sources */,
+				68F886F1285E06630026E3A6 /* Type.swift in Sources */,
 				68D1C3922817E86C0046D298 /* HomeViewController.swift in Sources */,
 				68D1C3AD281C2F910046D298 /* TableViewCell.swift in Sources */,
 				68D1C3B2281CDCE90046D298 /* SettingViewController.swift in Sources */,
@@ -844,6 +860,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "カメラの使用を許可します";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "常に許可する";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "使用中のみ許可する";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "写真フォルダへのアクセスを許可する";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -878,6 +895,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "カメラの使用を許可します";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "常に許可する";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "使用中のみ許可する";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "写真フォルダへのアクセスを許可する";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

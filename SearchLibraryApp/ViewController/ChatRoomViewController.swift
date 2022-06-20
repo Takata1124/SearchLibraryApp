@@ -21,7 +21,13 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         
         chatRoomTableView.delegate = self
         chatRoomTableView.dataSource = self
+        chatRoomTableView.separatorInset = .zero
+        chatRoomTableView.separatorColor = .black
+        chatRoomTableView.layer.borderColor = UIColor.black.cgColor
+        chatRoomTableView.layer.borderWidth = 0.5
         chatRoomTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        chatRoomTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -29,14 +35,28 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel!.text = TODO[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
+        
+        cell.label.text = TODO[indexPath.row]
+        cell.authorLabel.text = TODO[indexPath.row]
+        cell.isbnLabel.text = TODO[indexPath.row]
+        cell.createdLabel.text = TODO[indexPath.row]
+        cell.doneReadLabel.text = TODO[indexPath.row]
+       
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        chatRoomTableView.deselectRow(at: indexPath, animated: true)
+        
         performSegue(withIdentifier: "goChat", sender: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 100
     }
     
     @IBAction func goBackView(_ sender: Any) {

@@ -9,135 +9,135 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 
-struct Sender: SenderType {
-    var senderId: String
-    var displayName: String
-}
-
-struct Message: MessageType {
-    var sender: SenderType
-    var messageId: String
-    var sentDate: Date
-    var kind: MessageKind
-}
-
-class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate, MessageCellDelegate, InputBarAccessoryViewDelegate {
-
-    let currrentUser = Sender(senderId: "self", displayName: "iOS Academy")
+class ChatViewController: MessagesViewController, MessageCellDelegate {
+    
+    let currentUser = Sender(senderId: "self", displayName: "iOS Academy")
     let otherUser = Sender(senderId: "other", displayName: "John Smith")
     
-    var messages = [MessageType]()
+    private var messageList: [MessageEntity] = [] {
+        didSet {
+            messagesCollectionView.reloadData()
+            messagesCollectionView.scrollToLastItem(at: .bottom, animated: true)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        messages.append(Message(sender: currrentUser,
-//                                messageId: "1",
-//                                sentDate: Date().addingTimeInterval(-86400),
-//                                kind: .text("hello world")))
-//        
-//        messages.append(Message(sender: otherUser,
-//                                messageId: "2",
-//                                sentDate: Date().addingTimeInterval(-66400),
-//                                kind: .text("hello world")))
-        
+        self.title = "チャット"
+        self.navigationItem.hidesBackButton = true
+
+        messagesCollectionView.backgroundColor = UIColor.secondarySystemBackground
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
-        messageInputBar.sendButton.tintColor = UIColor.red
+        
+        setupButton()
+        setupInputBar()
     }
     
-    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+    private func setupInputBar() {
         
-        print(text)
+        messageInputBar.inputTextView.placeholder = "入力"
+        messageInputBar.inputTextView.layer.cornerRadius = 10.0
+        messageInputBar.inputTextView.layer.masksToBounds = true
+        messageInputBar.inputTextView.tintColor = .black
+        messageInputBar.backgroundView.backgroundColor = .systemTeal
+        messageInputBar.inputTextView.backgroundColor = .white
+        messageInputBar.inputTextView.layer.borderColor = UIColor.black.cgColor
+        messageInputBar.inputTextView.layer.borderWidth = 0.5
+        messageInputBar.layer.borderWidth = 0.5
+        messageInputBar.layer.borderColor = UIColor.black.cgColor
         
-        messages.append(Message(sender: otherUser,
-                                messageId: "3",
-                                sentDate: Date().addingTimeInterval(-46400),
-                                kind: .text("\(text)")))
+        let clipBarButtonItem = InputBarButtonItem()
+            .configure {
+                $0.image = UIImage(systemName: "arrowshape.turn.up.left")
+                $0.setSize(CGSize(width: 24.0, height: 36.0), animated: false)
+                $0.onTouchUpInside { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         
-        self.messagesCollectionView.reloadData()
-    
+        clipBarButtonItem.tintColor = .black
         
-        inputBar.inputTextView.text = String()
-        messagesCollectionView.scrollToLastItem()
+        messageInputBar.setStackViewItems([clipBarButtonItem, .flexibleSpace], forStack: .left, animated: false)
+        messageInputBar.setLeftStackViewWidthConstant(to: 45.0, animated: false)
     }
     
-//    func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
-//        <#code#>
-//    }
-//
-//    func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
-//        <#code#>
-//    }
-//
-//    func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
-//        <#code#>
-//    }
-    
-//    func didTapBackground(in cell: MessageCollectionViewCell) {
-//        <#code#>
-//    }
-    
-    func didTapMessage(in cell: MessageCollectionViewCell) {
-        print("message tap")
+    private func setupButton() {
+        
+        messageInputBar.sendButton.title = nil
+        messageInputBar.sendButton.image = UIImage(systemName: "paperplane")
+        messageInputBar.sendButton.tintColor = .black
     }
-    
-//    func didTapAvatar(in cell: MessageCollectionViewCell) {
-//        <#code#>
-//    }
-//
-//    func didTapCellTopLabel(in cell: MessageCollectionViewCell) {
-//        <#code#>
-//    }
-//
-//    func didTapCellBottomLabel(in cell: MessageCollectionViewCell) {
-//        <#code#>
-//    }
-//
-//    func didTapMessageTopLabel(in cell: MessageCollectionViewCell) {
-//        <#code#>
-//    }
-//
-//    func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
-//        <#code#>
-//    }
-//
-//    func didTapAccessoryView(in cell: MessageCollectionViewCell) {
-//        <#code#>
-//    }
-//
-//    func didTapImage(in cell: MessageCollectionViewCell) {
-//        <#code#>
-//    }
-//
-//    func didTapPlayButton(in cell: AudioMessageCell) {
-//        <#code#>
-//    }
-//
-//    func didStartAudio(in cell: AudioMessageCell) {
-//        <#code#>
-//    }
-//
-//    func didPauseAudio(in cell: AudioMessageCell) {
-//        <#code#>
-//    }
-//
-//    func didStopAudio(in cell: AudioMessageCell) {
-//        <#code#>
-//    }
-    
+}
+
+extension ChatViewController: MessagesDataSource {
     func currentSender() -> SenderType {
-        return currrentUser
+        return MessageSenderType.me
     }
     
-    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.row]
+    func otherSender() -> SenderType {
+        return MessageSenderType.other
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.count
+        return messageList.count
+    }
+    
+    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
+        return messageList[indexPath.section]
+    }
+    
+    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return NSAttributedString(
+            string: messageList[indexPath.section].userName,
+            attributes: [.font: UIFont.systemFont(ofSize: 12.0),
+                         .foregroundColor: UIColor.systemBlue])
+    }
+    
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return NSAttributedString(
+            string: messageList[indexPath.section].bottomText,
+            attributes: [.font: UIFont.systemFont(ofSize: 12.0),
+                         .foregroundColor: UIColor.secondaryLabel])
+    }
+}
+
+extension ChatViewController: MessagesDisplayDelegate {
+    func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? UIColor.systemBlue : UIColor.systemBackground
+    }
+    
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        return .bubbleTail(corner, .curved)
+    }
+    
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        //        avatarView.setImage(url: messageList[indexPath.section].iconImageUrl)
+        avatarView.set( avatar: Avatar(initials: message.sender.senderId == "0" ? "😊" : "🥳") )
+    }
+}
+
+extension ChatViewController: MessagesLayoutDelegate {
+    func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize.zero
+    }
+    
+    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 24
+    }
+    
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 24
+    }
+}
+
+extension ChatViewController: InputBarAccessoryViewDelegate {
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        messageList.append(MessageEntity.new(my: text))
+        messageInputBar.inputTextView.text = String()
     }
 }
