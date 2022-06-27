@@ -11,13 +11,16 @@ import SnapKit
 import CoreLocation
 import SQLite
 import MessageUI
+import Alamofire
+import AlamofireImage
+import Firebase
 
 class SettingDetailViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     var selectCell: String = ""
     let settingDetailView = SettingDetailView()
     private let appDelegateWindow = UIApplication.shared.windows.first
-    var database = Database()
+    var database = SQLDatabase()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +55,29 @@ class SettingDetailViewController: UIViewController, MFMailComposeViewController
         settingDetailView.mailButton.addTarget(self, action: #selector(mailPresent(sender:)), for: .touchUpInside)
         
         if self.selectCell == "データの表示順" {
-            
             let result = database.findById(id: 1)
             let currentOrder = result[0].isNewOrder
             settingDetailView.setupOrderSwitch(isNewOrder: currentOrder)
+        }
+        
+        if self.selectCell == "ユーザー情報" {
+            
+            if let uid = Auth.auth().currentUser?.uid {
+                Firestore.firestore().collection("users").document(uid).getDocument { snapshots, error in
+                    
+                    if error != nil {
+                        return
+                    }
+                    
+                    if let dic = snapshots?.data() {
+                        print(dic)
+                        print(dic["profileImageUrl"]!)
+                        
+                        let imageUrl: String = dic["profileImageUrl"]! as! String
+                        self.settingDetailView.setUpSelfImageUrl(imageUrl: imageUrl)
+                    }
+                }
+            }
         }
     }
     
@@ -95,7 +117,7 @@ class SettingDetailViewController: UIViewController, MFMailComposeViewController
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients(["skkyosk1124@gmail.com"]) // 宛先アドレス
+            mail.setToRecipients(["tnkxy834@yahoo.co.jp"]) // 宛先アドレス
             mail.setSubject("図書管理アプリに関するお問い合わせ") // 件名
             mail.setMessageBody("ここに本文が入ります。", isHTML: false) // 本文
             present(mail, animated: true, completion: nil)
@@ -119,5 +141,14 @@ class SettingDetailViewController: UIViewController, MFMailComposeViewController
         }
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func getUrlImage(imageUrl: String, completion: @escaping(UIImage) -> Void) {
+        
+        AF.request(imageUrl).responseImage { responseImage in
+            if case .success(let uiImage) = responseImage.result {
+                completion(uiImage)
+            }
+        }
     }
 }

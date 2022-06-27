@@ -43,6 +43,7 @@ struct MessageEntity: MessageType {
     var userId: Int
     var userName: String
     var iconImageUrl: URL?
+    var imageUrl: String
     var message: String
     var messageId: String
     var sentDate: Date
@@ -52,8 +53,8 @@ struct MessageEntity: MessageType {
             string: message,
             attributes: [.font: UIFont.systemFont(ofSize: 14.0),
                          .foregroundColor: isMe
-                            ? UIColor.white
-                            : UIColor.label]
+                            ? UIColor.black
+                              : UIColor.black]
         ))
     }
 
@@ -71,22 +72,26 @@ struct MessageEntity: MessageType {
 
     static func new(my message: String,
                     date: Date = Date(),
+                    imageUrl: String,
                     isMarkAsRead: Bool = false) -> MessageEntity {
         return MessageEntity(
             userId: 0,
             userName: "自分",
             iconImageUrl: myIconImageUrl,
+            imageUrl: imageUrl,
             message: message,
             messageId: UUID().uuidString,
             sentDate: date)
     }
 
     static func new(other message: String,
+                    imageUrl: String,
                     date: Date = Date()) -> MessageEntity {
         return MessageEntity(
             userId: 1,
             userName: "相手",
             iconImageUrl: otherIconImageUrl,
+            imageUrl: imageUrl,
             message: message,
             messageId: UUID().uuidString,
             sentDate: date)

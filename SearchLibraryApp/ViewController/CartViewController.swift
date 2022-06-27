@@ -19,10 +19,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var readButton: UIButton!
     @IBOutlet weak var starButton: UIButton!
     
+    var isMakeRoom: Bool = false
+    
     var item: Item?
     var star: Bool = false
     var read: Bool = false
-    
     var isNewOrder: Bool = false
     
     var isRead: Bool = false {
@@ -61,7 +62,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         coreDataTableView.dataSource = self
         coreDataTableView.separatorInset = .zero
         coreDataTableView.separatorColor = .black
-        
         coreDataTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
         
         self.navigationItem.hidesBackButton = true
@@ -95,6 +95,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             isbnViewController.isRead = self.read
             isbnViewController.isStar = self.star
             isbnViewController.isHiddenItems = true
+        }
+        
+        if segue.identifier == "goMakeRoom" {
+            let makeRoomViewController = segue.destination as! MakeRoomViewController
+            makeRoomViewController.item = self.item
         }
     }
     
@@ -173,15 +178,23 @@ extension CartViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        coreDataTableView.deselectRow(at: indexPath, animated: true)
-        
-        let commit = self.presenter.item(index: indexPath.row)
-        
-        self.item = Item(title: commit.title ?? "", author: commit.author ?? "", isbn: commit.isbn ?? "", salesDate: commit.pubDate ?? "", itemCaption: commit.detailText ?? "", largeImageUrl: commit.imageUrl ?? "")
-        self.star = commit.star
-        self.read = commit.read
-        
-        performSegue(withIdentifier: "goDetail", sender: nil)
+        if isMakeRoom {
+            coreDataTableView.deselectRow(at: indexPath, animated: true)
+            
+            let commit = self.presenter.item(index: indexPath.row)
+            self.item = Item(title: commit.title ?? "", author: commit.author ?? "", isbn: commit.isbn ?? "", salesDate: commit.pubDate ?? "", itemCaption: commit.detailText ?? "", largeImageUrl: commit.imageUrl ?? "")
+            
+            performSegue(withIdentifier: "goMakeRoom", sender: nil)
+        } else {
+            coreDataTableView.deselectRow(at: indexPath, animated: true)
+            
+            let commit = self.presenter.item(index: indexPath.row)
+            self.item = Item(title: commit.title ?? "", author: commit.author ?? "", isbn: commit.isbn ?? "", salesDate: commit.pubDate ?? "", itemCaption: commit.detailText ?? "", largeImageUrl: commit.imageUrl ?? "")
+            self.star = commit.star
+            self.read = commit.read
+            
+            performSegue(withIdentifier: "goDetail", sender: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

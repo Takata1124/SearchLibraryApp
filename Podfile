@@ -19,6 +19,7 @@ target 'SearchLibraryApp' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
+  pod 'Firebase/Database'
 
   target 'SearchLibraryAppTests' do
     inherit! :search_paths

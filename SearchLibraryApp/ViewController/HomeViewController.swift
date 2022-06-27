@@ -24,12 +24,14 @@ class HomeViewController: UIViewController {
     
     var chartDataSet: LineChartDataSet!
     private var presenter: HomePresenterInput!
-    var database = Database()
+    var database = SQLDatabase()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "ホーム"
+        self.navigationItem.hidesBackButton = true
+        
         self.presenter = HomePresenter(output: self, model: HomeModel())
         setupLocationManager()
         

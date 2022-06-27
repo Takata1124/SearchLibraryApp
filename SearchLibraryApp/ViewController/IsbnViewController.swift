@@ -214,7 +214,6 @@ class IsbnViewController: UIViewController, UITextFieldDelegate {
         
         alert.addAction(addActionAlert)
         alert.addAction(notAddActionAlert)
-        
         alert.view.tintColor = UIColor.modeTextColor
         
         present(alert, animated: true)
@@ -240,12 +239,10 @@ class IsbnViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func readAction(_ sender: Any) {
-        
         presenter.didTapReverseRead(text: self.titleText)
     }
     
     @IBAction func reverseStar(_ sender: Any) {
-        
         presenter.didTapReverseStar(text: self.titleText)
     }
     
@@ -258,10 +255,8 @@ class IsbnViewController: UIViewController, UITextFieldDelegate {
         let shareWebsite = NSURL(string: "\(self.imageUrl)")
         
         let activityItems = [shareText, shareAuthor, shareIsbn, shareDetailText, shareWebsite as Any] as [Any]
-        
         // 初期化処理
         let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        
         // 使用しないアクティビティタイプ
         let excludedActivityTypes = [
             UIActivity.ActivityType.postToFacebook,

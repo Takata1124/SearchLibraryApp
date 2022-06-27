@@ -10,6 +10,8 @@ import UIKit
 import CoreLocation
 import WebKit
 import SnapKit
+import Alamofire
+import AlamofireImage
 
 class SettingDetailView: UIView {
     
@@ -24,8 +26,8 @@ class SettingDetailView: UIView {
         button.frame = CGRect(x: UIScreen.main.bounds.width / 2 - 75, y: UIScreen.main.bounds.height / 2, width: 150, height: 50)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = UIColor.systemTeal
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1.0
+//        button.layer.borderColor = UIColor.black.cgColor
+//        button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10
         button.setTitle("お問い合わせ", for:UIControl.State.normal)
         return button
@@ -56,7 +58,7 @@ class SettingDetailView: UIView {
     }
     
     var orderSwitch = BaseSwitch()
-
+    
     var selectCell: String = ""  {
         didSet {
             selectCategorySetting(selectCell: selectCell)
@@ -65,9 +67,24 @@ class SettingDetailView: UIView {
     
     let webView = WKWebView()
     
+    var imageUrl: String = "" {
+        didSet {
+            setupSelfData(imageUrl: imageUrl)
+        }
+    }
+    
+    let selfImageView :UIImageView = {
+        let image = UIImageView()
+        image.layer.borderWidth = 0.5
+        image.layer.borderColor = UIColor.black.cgColor
+        image.layer.cornerRadius = 100
+        image.clipsToBounds = true
+        return image
+    }()
+    
     override init(frame: CGRect){
         super.init(frame: frame)
-
+        
     }
     
     required init?(coder: NSCoder) {
@@ -75,8 +92,11 @@ class SettingDetailView: UIView {
     }
     
     func confirmSelectCell(selectCell: String) {
-        
         self.selectCell = selectCell
+    }
+    
+    func setUpSelfImageUrl(imageUrl: String) {
+        self.imageUrl = imageUrl
     }
     
     func setupOrderSwitch(isNewOrder: Bool) {
@@ -108,11 +128,27 @@ class SettingDetailView: UIView {
         }
     }
     
+    private func setupSelfData(imageUrl: String) {
+        
+        AF.request(imageUrl).responseImage { responseImage in
+            
+            if case .success(let uiImage) = responseImage.result {
+                self.selfImageView.image = uiImage
+                
+                self.addSubview(self.selfImageView)
+                self.selfImageView.snp.makeConstraints { make in
+                    make.size.equalTo(200)
+                    make.center.equalToSuperview()
+                }
+            }
+        }
+    }
+    
     private func darkModeSetupLayout() {
         
         self.addSubview(modeLabel)
         self.addSubview(modeSwitch)
-    
+        
         if appDelegateWindow?.overrideUserInterfaceStyle == .dark {
             modeSelect = true
         } else {
@@ -127,7 +163,6 @@ class SettingDetailView: UIView {
     }
     
     private func setupMailLayout() {
- 
         
         self.addSubview(mailButton)
     }
@@ -141,9 +176,8 @@ class SettingDetailView: UIView {
     private func setupWebView(url: String) {
         
         self.backgroundColor = .red
-        
         self.addSubview(webView)
-  
+        
         let request = URLRequest(url: URL(string: url)!)
         webView.load(request)
         

@@ -13,7 +13,6 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "探す"
-        
         self.navigationItem.hidesBackButton = true
     }
     

@@ -24,7 +24,7 @@ protocol CartModelInput {
 class CartModel: CartModelInput {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let database = Database()
+    let database = SQLDatabase()
     
     func fetchAllItem(isOrder: Bool) -> [CartItem] {
         
@@ -134,7 +134,7 @@ class CartModel: CartModelInput {
     
     func updateDatabaseOrder(isOrder: Bool, completion: () -> Void) {
         
-        let database = Database()
+        let database = SQLDatabase()
         database.update(rowId: 1, isNewOrder: isOrder)
         completion()
     }

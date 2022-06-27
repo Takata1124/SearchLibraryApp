@@ -10,7 +10,7 @@ import SQLite
 
 let FILE_NAME = "table.db"
 
-class Database {
+class SQLDatabase {
     
     private let table = Table("table")
     private let id = Expression<Int64>("id")

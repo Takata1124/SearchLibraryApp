@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 import CoreLocation
 import CoreData
+import Firebase
+import PKHUD
 
 class SettingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -19,10 +21,12 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
                               "取扱説明",
                               "プライバシーポリシー",
                               "お問い合わせ",
+                              "通知設定",
                               "ダークモード",
                               "位置情報設定",
                               "データの表示順",
-                              "データの削除"]
+                              "データの削除",
+                              "ログアウト"]
     
     var selectCell: String = ""
     var locationManager: CLLocationManager!
@@ -83,7 +87,6 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "goSettingDetail" {
             let settingDetailViewController = segue.destination as! SettingDetailViewController
             settingDetailViewController.selectCell = self.selectCell
@@ -104,7 +107,6 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
             })
             
             alert.view.tintColor = UIColor.modeTextColor
-            
             alert.addAction(addActionAlert)
             present(alert, animated: true)
             
@@ -137,11 +139,39 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
             
             locationManager = CLLocationManager()
             locationManager.delegate = self
-
+            
+        case "ログアウト":
+            
+            let alert = UIAlertController(title: "ログアウト", message: "ログアウトしますか？", preferredStyle: .alert)
+            let addOkAlert: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
+                
+                HUD.show(.progress)
+                
+                alert.dismiss(animated: false, completion: nil)
+                let firebaseAuth = Auth.auth()
+                
+                do {
+                    try firebaseAuth.signOut()
+                    self.navigationController?.popToRootViewController(animated: true)
+                    HUD.hide()
+                } catch let signOutError as NSError {
+                    print("Error signing out: %@", signOutError)
+                    HUD.hide()
+                }
+            })
+            
+            let addNgAlert: UIAlertAction = UIAlertAction(title: "NO", style: .default, handler: { _ in
+                alert.dismiss(animated: false, completion: nil)
+            })
+            
+            alert.view.tintColor = UIColor.modeTextColor
+            alert.addAction(addOkAlert)
+            alert.addAction(addNgAlert)
+            present(alert, animated: true)
+            
         default:
             
             self.selectCell = selectCell
-            
             performSegue(withIdentifier: "goSettingDetail", sender: nil)
         }
     }
@@ -152,8 +182,8 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
         let cartItem = try? context.fetch(fetchRequest)
         
         cartItem?.forEach({ item in
-            context.delete(item)
             
+            context.delete(item)
             do {
                 try context.save()
                 completion(true)
@@ -175,9 +205,8 @@ extension SettingViewController: CLLocationManagerDelegate {
             let addOkAlert: UIAlertAction = UIAlertAction(title: "はい", style: .default, handler: { _ in
                 
                 alert.dismiss(animated: false, completion: nil)
-
                 if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-                   UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
             })
             
@@ -187,14 +216,13 @@ extension SettingViewController: CLLocationManagerDelegate {
             })
             
             alert.view.tintColor = UIColor.modeTextColor
-
             alert.addAction(addOkAlert)
             alert.addAction(addNgAlert)
             
             present(alert, animated: true)
             
         } else {
-           
+            
             let alert = UIAlertController(title: "位置情報", message: "位置情報の取得が許可されています", preferredStyle: .alert)
             let addOkAlert: UIAlertAction = UIAlertAction(title: "確認", style: .default, handler: { _ in
                 
@@ -202,7 +230,6 @@ extension SettingViewController: CLLocationManagerDelegate {
             })
             
             alert.view.tintColor = UIColor.modeTextColor
-            
             alert.addAction(addOkAlert)
             
             present(alert, animated: true)

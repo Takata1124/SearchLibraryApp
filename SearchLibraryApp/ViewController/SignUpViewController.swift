@@ -35,12 +35,16 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         selfImageView.clipsToBounds = true
         usernameTextfield.layer.borderWidth = 0.5
         usernameTextfield.layer.borderColor = UIColor.black.cgColor
+        usernameTextfield.delegate = self
         emailTextfield.layer.borderWidth = 0.5
         emailTextfield.layer.borderColor = UIColor.black.cgColor
+        emailTextfield.delegate = self
         passwordTextfield.layer.borderWidth = 0.5
         passwordTextfield.layer.borderColor = UIColor.black.cgColor
+        passwordTextfield.delegate = self
         signUpButton.layer.borderWidth = 0.5
         signUpButton.layer.borderColor = UIColor.black.cgColor
+        signUpButton.isEnabled = false
         loginButton.layer.borderWidth = 0.5
         loginButton.layer.borderColor = UIColor.black.cgColor
         
@@ -149,5 +153,26 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBAction func goBackView(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension SignUpViewController: UITextFieldDelegate {
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let usernameIsEmpty = usernameTextfield.text?.isEmpty ?? false
+        let emailIsEmpty = emailTextfield.text?.isEmpty ?? false
+        let passwordIsEmpty = passwordTextfield.text?.isEmpty ?? false
+        
+        if emailIsEmpty || passwordIsEmpty || usernameIsEmpty {
+            signUpButton.isEnabled  = false
+            return
+        }
+        
+        signUpButton.isEnabled = true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
